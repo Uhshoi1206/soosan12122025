@@ -1,0 +1,139 @@
+---
+/**
+ * SocialMeta.astro
+ * Generates Open Graph and Twitter Card meta tags
+ * Optimized for Facebook, Zalo, Twitter, LinkedIn sharing
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+  type?: 'website' | 'article' | 'product';
+  siteName?: string;
+  locale?: string;
+  // Product-specific
+  price?: number | null;
+  priceText?: string;
+  availability?: 'in stock' | 'out of stock' | 'pre-order';
+  brand?: string;
+  // Article-specific
+  publishedTime?: string;
+  author?: string;
+  section?: string;
+  tags?: string[];
+}
+
+const {
+  title,
+  description,
+  image,
+  url,
+  type = 'website',
+  siteName = 'Soosan Motor',
+  locale = 'vi_VN',
+  price,
+  priceText,
+  availability = 'in stock',
+  brand,
+  publishedTime,
+  author,
+  section,
+  tags = []
+} = Astro.props;
+
+const siteUrl = 'https://soosanmotor.com';
+
+// Ensure full URL
+const fullUrl = url.startsWith('http') ? url : `${siteUrl}${url.startsWith('/') ? '' : '/'}${url}`;
+
+// Ensure absolute image URL (important for CDN images)
+const imageUrl = image.startsWith('http') ? image : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
+
+// Format description for social sharing
+// For products: "Price | Availability | Description"
+// For articles: just description
+let socialDescription = description;
+if (type === 'product') {
+  const priceDisplay = priceText || (price ? `${price.toLocaleString('vi-VN')} VNĐ` : 'Liên hệ');
+  const availabilityDisplay = availability === 'in stock' ? 'Sẵn hàng' : 
+                              availability === 'pre-order' ? 'Đặt trước' : 'Hết hàng';
+  socialDescription = `💰 ${priceDisplay} | ✅ ${availabilityDisplay} | ${description.slice(0, 120)}`;
+}
+
+// Truncate description to optimal length
+const truncatedDescription = socialDescription.length > 200 
+  ? socialDescription.slice(0, 197) + '...' 
+  : socialDescription;
+
+// Generate OG type
+const ogType = type === 'product' ? 'product' : 
+               type === 'article' ? 'article' : 'website';
+---
+
+<!-- Essential Open Graph (Facebook, Zalo, LinkedIn) -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={truncatedDescription} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:secure_url" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
+<meta property="og:url" content={fullUrl} />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={locale} />
+
+<!-- Product-specific Open Graph -->
+{type === 'product' && (
+  <>
+    <meta property="product:brand" content={brand || 'Soosan'} />
+    <meta property="product:availability" content={availability} />
+    <meta property="product:condition" content="new" />
+    <meta property="product:retailer_item_id" content={url.split('/').pop()} />
+    {price && (
+      <>
+        <meta property="product:price:amount" content={String(price)} />
+        <meta property="product:price:currency" content="VND" />
+      </>
+    )}
+    {!price && (
+      <meta property="og:price:standard_amount" content="Liên hệ" />
+    )}
+  </>
+)}
+
+<!-- Article-specific Open Graph -->
+{type === 'article' && (
+  <>
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {author && <meta property="article:author" content={author} />}
+    {section && <meta property="article:section" content={section} />}
+    {tags.map(tag => (
+      <meta property="article:tag" content={tag} />
+    ))}
+  </>
+)}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={truncatedDescription} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={title} />
+<!-- <meta name="twitter:site" content="@soosanmotor" /> -->
+<!-- <meta name="twitter:creator" content="@soosanmotor" /> -->
+
+<!-- LinkedIn specific (uses OG tags primarily) -->
+<meta property="og:image:type" content="image/webp" />
+
+<!-- Zalo specific -->
+<!-- Zalo uses OG tags, optimal image size: 600x315 min, 1200x630 recommended -->
+<!-- Zalo reads og:title, og:description, og:image -->
+
+<!-- Pinterest -->
+<meta property="og:see_also" content={siteUrl} />
+
+<!-- Additional meta for rich previews -->
+<meta name="thumbnail" content={imageUrl} />

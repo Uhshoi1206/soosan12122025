@@ -1,0 +1,423 @@
+---
+/**
+ * ProductSchema.astro
+ * Generates JSON-LD structured data for products
+ * Optimized for Google Rich Results and AI Engines (ChatGPT, Gemini, Claude)
+ */
+
+interface Props {
+  product: {
+    id: string;
+    name: string;
+    slug: string;
+    type: string;
+    brand: string | string[];
+    description?: string;
+    detailedDescription?: string;
+    price?: number | null;
+    priceText?: string;
+    thumbnailUrl: string;
+    images: string[];
+    weight: number;
+    weightText: string;
+    dimensions: string;
+    length: number;
+    width: number;
+    height: number;
+    origin?: string;
+    isNew?: boolean;
+    isHot?: boolean;
+    stockStatus?: 'in-stock' | 'out-of-stock' | 'pre-order' | 'discontinued';
+    // Engine specs
+    engineModel?: string;
+    enginePower?: string;
+    engineCapacity?: string;
+    fuel?: string;
+    transmission?: string;
+    // Specialized specs
+    trailerSpec?: {
+      dimensions?: {
+        capacity?: string;
+        overallDimensions?: string;
+        wheelbase?: string;
+      };
+      weight?: {
+        curbWeight?: string;
+        payload?: string;
+        grossWeight?: string;
+      };
+      chassis?: {
+        mainBeam?: string;
+        frameMaterial?: string;
+        landingGear?: string;
+      };
+    };
+    craneSpec?: {
+      liftingCapacity?: number;
+      liftingCapacityText?: string;
+      maxLiftingHeight?: string;
+      maxWorkingRadius?: string;
+      boomSections?: number;
+    };
+    features?: string[];
+  };
+  categoryName?: string;
+}
+
+const { product, categoryName = '' } = Astro.props;
+
+const siteUrl = 'https://soosanmotor.com';
+const productUrl = `${siteUrl}/${product.type}/${product.slug}`;
+const brandName = Array.isArray(product.brand) ? product.brand[0] : product.brand;
+const brandList = Array.isArray(product.brand) ? product.brand : [product.brand];
+
+// Vehicle type mapping for Schema.org
+const vehicleTypeMap: Record<string, string> = {
+  'xe-tai': 'Truck',
+  'xe-cau': 'Vehicle', // No specific crane schema
+  'mooc': 'Trailer',
+  'dau-keo': 'Vehicle'
+};
+
+const schemaType = vehicleTypeMap[product.type] || 'Vehicle';
+
+// Map stockStatus to Schema.org availability
+const stockStatusToSchemaOrg: Record<string, string> = {
+  'in-stock': 'https://schema.org/InStock',
+  'out-of-stock': 'https://schema.org/OutOfStock',
+  'pre-order': 'https://schema.org/PreOrder',
+  'discontinued': 'https://schema.org/Discontinued'
+};
+
+const stockStatusToMeta: Record<string, string> = {
+  'in-stock': 'in stock',
+  'out-of-stock': 'out of stock',
+  'pre-order': 'available for order',
+  'discontinued': 'discontinued'
+};
+
+const availability = stockStatusToSchemaOrg[product.stockStatus || 'in-stock'] || stockStatusToSchemaOrg['in-stock'];
+const availabilityMeta = stockStatusToMeta[product.stockStatus || 'in-stock'] || 'in stock';
+
+// Build specifications array for AI understanding
+const specifications: Array<{name: string, value: string}> = [];
+
+if (product.weightText) {
+  specifications.push({ name: 'Tải trọng', value: product.weightText });
+}
+if (product.dimensions) {
+  specifications.push({ name: 'Kích thước tổng thể', value: product.dimensions });
+}
+if (product.engineModel) {
+  specifications.push({ name: 'Model động cơ', value: product.engineModel });
+}
+if (product.enginePower) {
+  specifications.push({ name: 'Công suất', value: product.enginePower });
+}
+if (product.engineCapacity) {
+  specifications.push({ name: 'Dung tích động cơ', value: product.engineCapacity });
+}
+if (product.fuel) {
+  specifications.push({ name: 'Nhiên liệu', value: product.fuel });
+}
+if (product.transmission) {
+  specifications.push({ name: 'Hộp số', value: product.transmission });
+}
+if (product.origin) {
+  specifications.push({ name: 'Xuất xứ', value: product.origin });
+}
+
+// Trailer specific specs
+if (product.trailerSpec) {
+  const trailer = product.trailerSpec;
+  if (trailer.dimensions?.capacity) {
+    specifications.push({ name: 'Thể tích thùng', value: trailer.dimensions.capacity });
+  }
+  if (trailer.dimensions?.wheelbase) {
+    specifications.push({ name: 'Chiều dài cơ sở', value: trailer.dimensions.wheelbase });
+  }
+  if (trailer.weight?.payload) {
+    specifications.push({ name: 'Tải trọng cho phép', value: trailer.weight.payload });
+  }
+  if (trailer.weight?.grossWeight) {
+    specifications.push({ name: 'Khối lượng toàn bộ', value: trailer.weight.grossWeight });
+  }
+  if (trailer.chassis?.frameMaterial) {
+    specifications.push({ name: 'Vật liệu khung', value: trailer.chassis.frameMaterial });
+  }
+  if (trailer.chassis?.landingGear) {
+    specifications.push({ name: 'Chân chống', value: trailer.chassis.landingGear });
+  }
+}
+
+// Crane specific specs
+if (product.craneSpec) {
+  const crane = product.craneSpec;
+  if (crane.liftingCapacityText) {
+    specifications.push({ name: 'Sức nâng', value: crane.liftingCapacityText });
+  }
+  if (crane.maxLiftingHeight) {
+    specifications.push({ name: 'Chiều cao nâng tối đa', value: crane.maxLiftingHeight });
+  }
+  if (crane.maxWorkingRadius) {
+    specifications.push({ name: 'Bán kính làm việc tối đa', value: crane.maxWorkingRadius });
+  }
+  if (crane.boomSections) {
+    specifications.push({ name: 'Số đốt cần', value: `${crane.boomSections} đốt` });
+  }
+}
+
+// Price validity - 90 days from now
+const priceValidUntil = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+// Get clean description
+const cleanDescription = product.description || 
+  (product.detailedDescription?.replace(/<[^>]+>/g, '').slice(0, 300) + '...');
+
+// Product Schema (Schema.org/Product)
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": `${productUrl}#product`,
+  "name": product.name,
+  "description": cleanDescription,
+  "image": [product.thumbnailUrl, ...product.images],
+  "brand": {
+    "@type": "Brand",
+    "name": brandName
+  },
+  "manufacturer": brandList.map(b => ({
+    "@type": "Organization",
+    "name": b
+  })),
+  "url": productUrl,
+  "sku": product.id,
+  "mpn": product.id,
+  "category": categoryName || product.type,
+  "offers": {
+    "@type": "Offer",
+    "url": productUrl,
+    "priceCurrency": "VND",
+    "price": product.price || undefined,
+    "priceValidUntil": priceValidUntil,
+    "availability": availability,
+    "itemCondition": "https://schema.org/NewCondition",
+    "seller": {
+      "@type": "Organization",
+      "name": "Soosan Vina Motor",
+      "url": siteUrl
+    }
+  },
+  "additionalProperty": specifications.map(spec => ({
+    "@type": "PropertyValue",
+    "name": spec.name,
+    "value": spec.value
+  })),
+  ...(product.isNew && { "isNewProduct": true }),
+  ...(product.features && product.features.length > 0 && {
+    "hasProductReturnPolicy": {
+      "@type": "ProductReturnPolicy",
+      "productReturnDays": 30
+    }
+  })
+};
+
+// Vehicle Schema (for AI engines deep understanding)
+const vehicleSchema = {
+  "@context": "https://schema.org",
+  "@type": schemaType,
+  "@id": `${productUrl}#vehicle`,
+  "name": product.name,
+  "brand": {
+    "@type": "Brand", 
+    "name": brandName
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": brandName
+  },
+  "model": product.name,
+  "vehicleConfiguration": categoryName || product.type,
+  "bodyType": product.type === 'mooc' ? 'Trailer' : 
+              product.type === 'xe-cau' ? 'Crane Truck' : 
+              product.type === 'dau-keo' ? 'Tractor' : 'Truck',
+  ...(product.trailerSpec?.dimensions?.capacity && {
+    "cargoVolume": {
+      "@type": "QuantitativeValue",
+      "value": parseFloat(product.trailerSpec.dimensions.capacity) || product.trailerSpec.dimensions.capacity,
+      "unitText": "m³"
+    }
+  }),
+  "payload": {
+    "@type": "QuantitativeValue",
+    "value": product.weight,
+    "unitText": product.weight > 100 ? "kg" : "tấn"
+  },
+  ...(product.engineModel && {
+    "vehicleEngine": {
+      "@type": "EngineSpecification",
+      "name": product.engineModel,
+      ...(product.enginePower && { "enginePower": product.enginePower }),
+      ...(product.engineCapacity && { "engineDisplacement": product.engineCapacity }),
+      ...(product.fuel && { "fuelType": product.fuel })
+    }
+  }),
+  ...(product.transmission && { "vehicleTransmission": product.transmission }),
+  "url": productUrl,
+  "image": product.thumbnailUrl,
+  "weight": {
+    "@type": "QuantitativeValue",
+    "value": product.weight,
+    "unitText": product.weight > 100 ? "kg" : "tấn"
+  },
+  "width": {
+    "@type": "QuantitativeValue",
+    "value": product.width,
+    "unitText": product.width > 10 ? "mm" : "m"
+  },
+  "height": {
+    "@type": "QuantitativeValue",
+    "value": product.height,
+    "unitText": product.height > 10 ? "mm" : "m"
+  },
+  "length": {
+    "@type": "QuantitativeValue",
+    "value": product.length,
+    "unitText": product.length > 100 ? "mm" : "m"
+  }
+};
+
+// Organization Schema
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "AutoDealer",
+  "@id": `${siteUrl}#organization`,
+  "name": "Soosan Vina Motor",
+  "alternateName": "Soosan Motor",
+  "url": siteUrl,
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${siteUrl}/logo.png`,
+    "width": 200,
+    "height": 60
+  },
+  "description": "Nhà sản xuất và phân phối sơ mi rơ moóc, xe cẩu, xe tải chuyên dụng hàng đầu Việt Nam. Sản phẩm chất lượng Hàn Quốc, bảo hành chính hãng.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "KCN Đồng Văn, Duy Tiên",
+    "addressLocality": "Hà Nam",
+    "addressRegion": "Hà Nam",
+    "postalCode": "400000",
+    "addressCountry": "VN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 20.6,
+    "longitude": 106.0
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+84-xxx-xxx-xxx",
+      "contactType": "sales",
+      "availableLanguage": ["Vietnamese", "English"]
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": "+84-xxx-xxx-xxx",
+      "contactType": "customer service",
+      "availableLanguage": ["Vietnamese"]
+    }
+  ],
+  "sameAs": [
+    "https://www.facebook.com/soosanmotor",
+    "https://www.youtube.com/@soosanmotor"
+  ]
+};
+
+// BreadcrumbList Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Trang chủ",
+      "item": siteUrl
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": categoryName || product.type.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      "item": `${siteUrl}/danh-muc-xe?type=${product.type}`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": product.name,
+      "item": productUrl
+    }
+  ]
+};
+
+// FAQ Schema (if features exist, convert to FAQ)
+const faqSchema = product.features && product.features.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": `${product.name} có những tính năng nổi bật gì?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": product.features.join(', ')
+      }
+    },
+    {
+      "@type": "Question", 
+      "name": `Giá ${product.name} là bao nhiêu?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": product.priceText || 'Liên hệ để nhận báo giá tốt nhất'
+      }
+    },
+    {
+      "@type": "Question",
+      "name": `${product.name} phù hợp với nhu cầu nào?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": cleanDescription
+      }
+    }
+  ]
+} : null;
+---
+
+<!-- Product Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+
+<!-- Vehicle Schema (for AI engines) -->
+<script type="application/ld+json" set:html={JSON.stringify(vehicleSchema)} />
+
+<!-- Organization Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<!-- FAQ Schema (if applicable) -->
+{faqSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+)}
+
+<!-- AI-Friendly Meta Tags (helps ChatGPT, Gemini understand context) -->
+<meta name="product:brand" content={brandName} />
+<meta name="product:category" content={categoryName || product.type} />
+<meta name="product:weight" content={product.weightText} />
+<meta name="product:dimensions" content={product.dimensions} />
+<meta name="product:origin" content={product.origin || 'N/A'} />
+{product.price && <meta name="product:price:amount" content={String(product.price)} />}
+<meta name="product:price:currency" content="VND" />
+<meta name="product:availability" content={availabilityMeta} />
+<meta name="product:condition" content="new" />

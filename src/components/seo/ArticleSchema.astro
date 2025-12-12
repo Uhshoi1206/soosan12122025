@@ -1,0 +1,204 @@
+---
+/**
+ * ArticleSchema.astro
+ * Generates JSON-LD structured data for blog articles/posts
+ * Optimized for Google Rich Results and AI Engines
+ */
+
+interface Props {
+  article: {
+    id: string;
+    title: string;
+    slug: string;
+    description: string;
+    category: string;
+    images: string[];
+    publishDate: number;
+    readTime: number;
+    author: string;
+    tags?: string[];
+    views?: number;
+    comments?: number;
+  };
+  categoryName: string;
+  categorySlug: string;
+  content?: string;
+}
+
+const { article, categoryName, categorySlug, content = '' } = Astro.props;
+
+const siteUrl = 'https://soosanmotor.com';
+const articleUrl = `${siteUrl}/danh-muc-bai-viet/${categorySlug}/${article.slug}`;
+const publishedDate = new Date(article.publishDate).toISOString();
+const modifiedDate = new Date().toISOString(); // Use current date as modified
+
+// Calculate word count from content for more accurate reading time
+const wordCount = content.replace(/<[^>]+>/g, '').split(/\s+/).length || article.readTime * 200;
+
+// Article Schema (Schema.org/Article)
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${articleUrl}#article`,
+  "headline": article.title,
+  "description": article.description,
+  "image": article.images,
+  "author": {
+    "@type": "Person",
+    "name": article.author,
+    "url": siteUrl
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Soosan Vina Motor",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/logo.png`,
+      "width": 200,
+      "height": 60
+    }
+  },
+  "datePublished": publishedDate,
+  "dateModified": modifiedDate,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": articleUrl
+  },
+  "articleSection": categoryName,
+  "wordCount": wordCount,
+  "inLanguage": "vi-VN",
+  "url": articleUrl,
+  ...(article.tags && article.tags.length > 0 && {
+    "keywords": article.tags.join(", ")
+  }),
+  "isAccessibleForFree": true,
+  "about": {
+    "@type": "Thing",
+    "name": categoryName,
+    "description": `Bài viết về ${categoryName.toLowerCase()} - xe tải, xe chuyên dụng, sơ mi rơ moóc`
+  }
+};
+
+// BlogPosting Schema (more specific for blog posts)
+const blogPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `${articleUrl}#blogposting`,
+  "headline": article.title,
+  "alternativeHeadline": article.description.slice(0, 100),
+  "description": article.description,
+  "image": article.images[0] || `${siteUrl}/og-default.jpg`,
+  "author": {
+    "@type": "Person",
+    "name": article.author
+  },
+  "datePublished": publishedDate,
+  "dateModified": modifiedDate,
+  "publisher": {
+    "@type": "Organization",
+    "name": "Soosan Vina Motor",
+    "url": siteUrl,
+    "logo": `${siteUrl}/logo.png`
+  },
+  "mainEntityOfPage": articleUrl,
+  "articleBody": content.replace(/<[^>]+>/g, '').slice(0, 5000), // First 5000 chars for AI
+  "wordCount": wordCount,
+  "timeRequired": `PT${article.readTime}M`,
+  "inLanguage": "vi",
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Soosan Motor Blog",
+    "url": `${siteUrl}/danh-muc-bai-viet`
+  }
+};
+
+// Organization Schema
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "AutoDealer",
+  "@id": `${siteUrl}#organization`,
+  "name": "Soosan Vina Motor",
+  "url": siteUrl,
+  "logo": `${siteUrl}/logo.png`,
+  "description": "Nhà sản xuất và phân phối sơ mi rơ moóc, xe cẩu, xe tải chuyên dụng hàng đầu Việt Nam"
+};
+
+// BreadcrumbList Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Trang chủ",
+      "item": siteUrl
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": `${siteUrl}/danh-muc-bai-viet`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": categoryName,
+      "item": `${siteUrl}/danh-muc-bai-viet/${categorySlug}`
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": article.title,
+      "item": articleUrl
+    }
+  ]
+};
+
+// WebPage Schema
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${articleUrl}#webpage`,
+  "url": articleUrl,
+  "name": article.title,
+  "description": article.description,
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": `${siteUrl}#website`,
+    "name": "Soosan Motor",
+    "url": siteUrl
+  },
+  "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": article.images[0]
+  },
+  "datePublished": publishedDate,
+  "dateModified": modifiedDate,
+  "breadcrumb": breadcrumbSchema
+};
+---
+
+<!-- Article Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+<!-- BlogPosting Schema (more detailed) -->
+<script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
+
+<!-- Organization Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<!-- WebPage Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
+
+<!-- AI-Friendly Meta Tags -->
+<meta name="article:published_time" content={publishedDate} />
+<meta name="article:modified_time" content={modifiedDate} />
+<meta name="article:author" content={article.author} />
+<meta name="article:section" content={categoryName} />
+{article.tags && article.tags.map(tag => (
+  <meta name="article:tag" content={tag} />
+))}
