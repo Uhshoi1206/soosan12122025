@@ -1,0 +1,81 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import ProductDetailWithProvider from '../../components/TruckDetail/ProductDetailWithProvider.tsx';
+import { getVisibleProducts, getCategoryById, getVisibleBlogPosts } from '../../utils/contentCollections';
+import { getEntry } from 'astro:content';
+export async function getStaticPaths() {
+  const trucks = await getVisibleProducts();
+
+  return trucks.map((truck) => ({
+    params: {
+      type: truck.type,
+      slug: truck.slug
+    },
+    props: { truck },
+  }));
+}
+
+const { truck } = Astro.props;
+const { type } = Astro.params;
+
+if (!truck || truck.type !== type) {
+  return Astro.redirect('/404');
+}
+
+const allTrucks = await getVisibleProducts();
+
+// Get related trucks with fallback logic to ensure we have 4 products
+let relatedTrucks = allTrucks
+  .filter(t =>
+    (t.brand === truck.brand ||
+     Math.abs(t.weight - truck.weight) < 2) &&
+    t.id !== truck.id
+  )
+  .slice(0, 4);
+
+// If we don't have enough, add more from the same type
+if (relatedTrucks.length < 4) {
+  const additionalTrucks = allTrucks
+    .filter(t =>
+      t.type === truck.type &&
+      t.id !== truck.id &&
+      !relatedTrucks.some(rt => rt.id === t.id)
+    )
+    .slice(0, 4 - relatedTrucks.length);
+
+  relatedTrucks = [...relatedTrucks, ...additionalTrucks];
+}
+
+// If still not enough, add any other products
+if (relatedTrucks.length < 4) {
+  const additionalTrucks = allTrucks
+    .filter(t =>
+      t.id !== truck.id &&
+      !relatedTrucks.some(rt => rt.id === t.id)
+    )
+    .slice(0, 4 - relatedTrucks.length);
+
+  relatedTrucks = [...relatedTrucks, ...additionalTrucks];
+}
+
+const category = await getCategoryById(truck.type);
+const categoryName = category?.data.name || truck.type;
+
+// Get all blog posts for related posts calculation
+const allBlogPosts = await getVisibleBlogPosts();
+
+// Load site settings from CMS
+const settingsEntry = await getEntry('settings', 'site-settings');
+const settings = settingsEntry?.data;
+---
+
+<ProductLayout product={truck} categoryName={categoryName}>
+  <ProductDetailWithProvider
+    client:idle
+    truck={truck}
+    relatedTrucks={relatedTrucks}
+    allBlogPosts={allBlogPosts}
+    siteSettings={settings}
+  />
+</ProductLayout>
+

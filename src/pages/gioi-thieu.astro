@@ -1,0 +1,297 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Layout from '../components/Layout.tsx';
+import { Card, CardContent } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { getEntry } from 'astro:content';
+
+const settingsEntry = await getEntry('settings', 'site-settings');
+const settings = settingsEntry?.data;
+const phone = settings?.contact_section?.phone || '0815555528';
+const phoneDisplay = settings?.contact_section?.phoneDisplay || '0815555528';
+---
+
+<BaseLayout
+  title="Giới Thiệu | Soosan Vina Motor - Nhà sản xuất xe tải & thiết bị vận tải"
+  description="Soosan Vina Motor tự hào là nhà sản xuất đa dạng các dòng phương tiện vận tải hàng đầu Việt Nam. Chuyên cung cấp xe tải, xe cẩu, sơ mi rơ moóc, xe đầu kéo chất lượng cao."
+>
+  <Layout client:load siteSettings={settings}>
+    <!-- Hero Section / Page Header -->
+    <section class="relative page-header-bg page-header-text py-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Giới Thiệu
+          </h1>
+          <p class="text-lg md:text-xl text-gray-200 leading-relaxed">
+            Nhà sản xuất sơ mi rơ moóc, cẩu, thùng xe tải đông lạnh, xe xitéc (bồn) chở xăng dầu,
+            xe chuyên dụng hàng đầu tại Việt Nam
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+                Về Soosan Vina Motor
+              </h2>
+              <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                Soosan Vina Motor tự hào là nhà sản xuất đa dạng các dòng phương tiện vận tải hàng đầu Việt Nam,
+                chuyên cung cấp xe tải, xe cẩu, sơ mi rơ moóc, xe đầu kéo và các loại xe chuyên dụng khác.
+              </p>
+              <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                Với nhiều năm kinh nghiệm trong ngành và đội ngũ kỹ thuật chuyên nghiệp, chúng tôi cam kết
+                mang đến cho khách hàng những sản phẩm chất lượng cao từ các thương hiệu uy tín như Hyundai,
+                Hino, Isuzu, Dongfeng, CIMC, Doosung, Soosan và nhiều thương hiệu hàng đầu khác.
+              </p>
+              <a href="/lien-he" class="inline-block">
+                <Button className="bg-primary hover:bg-primary-700 text-white px-8 py-3 text-lg">
+                  Liên hệ tư vấn
+                </Button>
+              </a>
+            </div>
+            <div class="relative">
+              <img
+                src="https://images.pexels.com/photos/1756957/pexels-photo-1756957.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Soosan Vina Motor Showroom"
+                class="rounded-lg shadow-2xl w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900">
+            Tại Sao Chọn Chúng Tôi?
+          </h2>
+          <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            Chúng tôi cam kết mang đến giá trị tốt nhất cho khách hàng với chất lượng sản phẩm,
+            dịch vụ và chính sách hỗ trợ vượt trội
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="p-6">
+                <div class="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Sản Phẩm Chính Hãng</h3>
+                <p class="text-gray-600">
+                  100% sản phẩm chính hãng, có nguồn gốc rõ ràng, đầy đủ giấy tờ và chế độ bảo hành từ nhà sản xuất
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="p-6">
+                <div class="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Giá Cạnh Tranh</h3>
+                <p class="text-gray-600">
+                  Cam kết giá tốt nhất thị trường với nhiều chương trình khuyến mãi và ưu đãi hấp dẫn quanh năm
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="p-6">
+                <div class="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Hỗ Trợ Tài Chính</h3>
+                <p class="text-gray-600">
+                  Hỗ trợ vay vốn lên đến 70% giá trị xe với lãi suất ưu đãi, thủ tục nhanh chóng, đơn giản
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="p-6">
+                <div class="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Dịch Vụ 24/7</h3>
+                <p class="text-gray-600">
+                  Dịch vụ chăm sóc khách hàng, bảo hành, bảo dưỡng chu đáo với đội ngũ kỹ thuật 24/7
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision & Mission Section -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <div>
+              <div class="flex items-center mb-6">
+                <div class="bg-primary-100 p-3 rounded-lg mr-4">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900">Tầm Nhìn</h2>
+              </div>
+              <p class="text-lg text-gray-700 leading-relaxed">
+                Trở thành nhà sản xuất và phân phối xe thương mại hàng đầu Việt Nam, được khách hàng
+                tin tưởng lựa chọn bởi chất lượng sản phẩm vượt trội và dịch vụ chuyên nghiệp.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex items-center mb-6">
+                <div class="bg-primary-100 p-3 rounded-lg mr-4">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900">Sứ Mệnh</h2>
+              </div>
+              <p class="text-lg text-gray-700 leading-relaxed">
+                Cung cấp các sản phẩm xe thương mại chất lượng cao với giá cả hợp lý, kèm theo dịch vụ
+                hậu mãi tận tâm, góp phần nâng cao hiệu quả kinh doanh cho khách hàng.
+              </p>
+            </div>
+          </div>
+
+          <!-- Core Values -->
+          <div>
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-900">Giá Trị Cốt Lõi</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="text-center p-6 bg-gray-50 rounded-lg">
+                <div class="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                  1
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Chất Lượng</h3>
+                <p class="text-gray-600">
+                  Cam kết chất lượng sản phẩm và dịch vụ đạt tiêu chuẩn cao nhất
+                </p>
+              </div>
+
+              <div class="text-center p-6 bg-gray-50 rounded-lg">
+                <div class="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                  2
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Uy Tín</h3>
+                <p class="text-gray-600">
+                  Xây dựng niềm tin với khách hàng qua từng sản phẩm và dịch vụ
+                </p>
+              </div>
+
+              <div class="text-center p-6 bg-gray-50 rounded-lg">
+                <div class="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                  3
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Tận Tâm</h3>
+                <p class="text-gray-600">
+                  Phục vụ khách hàng bằng sự tận tâm và trách nhiệm cao nhất
+                </p>
+              </div>
+
+              <div class="text-center p-6 bg-gray-50 rounded-lg">
+                <div class="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                  4
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-900">Đổi Mới</h3>
+                <p class="text-gray-600">
+                  Không ngừng cải tiến, áp dụng công nghệ mới vào sản xuất
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            Sẵn Sàng Hợp Tác Cùng Chúng Tôi?
+          </h2>
+          <p class="text-lg text-gray-200 mb-8 leading-relaxed">
+            Hãy để chúng tôi tư vấn và giúp bạn tìm được chiếc xe phù hợp nhất cho nhu cầu kinh doanh của mình.
+            Đội ngũ chuyên viên của chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/lien-he">
+              <Button className="bg-primary hover:bg-primary-700 text-white px-8 py-3 text-lg">
+                Liên Hệ Ngay
+              </Button>
+            </a>
+            <a href="/danh-muc-xe">
+              <Button className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-3 text-lg">
+                Xem Danh Mục Xe
+              </Button>
+            </a>
+          </div>
+
+          <div class="mt-12 pt-8 border-t border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div>
+                <div class="flex items-center justify-center mb-3">
+                  <svg class="w-6 h-6 text-primary-300 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                  </svg>
+                  <span class="font-semibold">Hotline</span>
+                </div>
+                <a href={`tel:${phone}`} class="text-xl font-bold text-primary-300 hover:text-primary-200">
+                  {phoneDisplay}
+                </a>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-center mb-3">
+                  <svg class="w-6 h-6 text-primary-300 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                  </svg>
+                  <span class="font-semibold">Email</span>
+                </div>
+                <a href="mailto:sales@soosanmotor.com" class="text-xl font-bold text-primary-300 hover:text-primary-200">
+                  sales@soosanmotor.com
+                </a>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-center mb-3">
+                  <svg class="w-6 h-6 text-primary-300 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span class="font-semibold">Địa chỉ</span>
+                </div>
+                <p class="text-gray-300">
+                  Cụm công nghiệp Hạp Lĩnh, Phường Hạp Lĩnh, Tỉnh Bắc Ninh, Việt Nam
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </Layout>
+</BaseLayout>

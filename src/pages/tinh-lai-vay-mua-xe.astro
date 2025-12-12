@@ -1,0 +1,437 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Layout from '../components/Layout.tsx';
+import { getEntry } from 'astro:content';
+
+const settingsEntry = await getEntry('settings', 'site-settings');
+const settings = settingsEntry?.data;
+const phone = settings?.contact_section?.phone || '0815555528';
+const phoneDisplay = settings?.contact_section?.phoneDisplay || '0815555528';
+
+const title = 'Tính Lãi Vay Mua Xe | soosanmotor.com';
+const description = 'Công cụ tính lãi vay mua xe tải, xe cẩu, mooc và các loại xe chuyên dụng khác. Hỗ trợ tính toán gói vay phù hợp.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Layout client:load siteSettings={settings}>
+    {/* Page Header */}
+    <div class="page-header-bg page-header-text py-12">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-3xl font-bold mb-4">Tính Lãi Vay Mua Xe</h1>
+        <p class="text-lg max-w-2xl mx-auto opacity-80">
+          Công cụ hỗ trợ tính toán lãi vay và kế hoạch trả góp cho xe tải, xe cẩu, sơ mi rơ mooc và xe đầu kéo
+        </p>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+      <div class="max-w-4xl mx-auto">
+
+        <!-- Form tính toán - Static HTML for SEO -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 class="text-xl font-semibold mb-6 text-gray-800">Thông Tin Vay</h2>
+          <form id="loan-calculation-form" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="text-sm font-medium" for="vehiclePrice">Giá xe (đã bao gồm VAT)</label>
+                <input
+                  type="text"
+                  id="vehiclePrice"
+                  name="vehiclePrice"
+                  placeholder="Nhập giá xe (VNĐ)"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-medium" for="downPayment">Số tiền trả trước</label>
+                <input
+                  type="text"
+                  id="downPayment"
+                  name="downPayment"
+                  placeholder="Nhập số tiền trả trước (VNĐ)"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-medium" for="interestRate">Lãi suất (%/năm)</label>
+                <input
+                  type="number"
+                  id="interestRate"
+                  name="interestRate"
+                  placeholder="Nhập lãi suất (ví dụ: 10.5)"
+                  step="0.1"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-medium" for="loanTerm">Thời gian vay (năm)</label>
+                <select
+                  id="loanTerm"
+                  name="loanTerm"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                >
+                  <option value="">Chọn thời gian vay</option>
+                  <option value="1">1 năm</option>
+                  <option value="2">2 năm</option>
+                  <option value="3">3 năm</option>
+                  <option value="4">4 năm</option>
+                  <option value="5">5 năm</option>
+                  <option value="6">6 năm</option>
+                  <option value="7">7 năm</option>
+                </select>
+              </div>
+
+              <div class="space-y-2 md:col-span-2">
+                <label class="text-sm font-medium" for="paymentMethod">Phương thức trả</label>
+                <select
+                  id="paymentMethod"
+                  name="paymentMethod"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                >
+                  <option value="">Chọn phương thức trả</option>
+                  <option value="equal_principal_interest">Gốc + lãi cố định</option>
+                  <option value="decreasing_principal">Gốc giảm dần</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors font-medium"
+            >
+              <span class="inline-flex items-center justify-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+                Tính Toán Lãi Vay
+              </span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Kết quả - Hidden by default -->
+        <div id="results-section" class="bg-green-50 rounded-lg shadow-lg p-6 mb-8 hidden">
+          <h2 class="text-xl font-semibold mb-4 text-green-800">Kết Quả Tính Toán</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-700">Giá trị xe:</span>
+                <span class="font-semibold" id="result-vehicle-price">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Số tiền trả trước:</span>
+                <span class="font-semibold" id="result-down-payment">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Số tiền vay:</span>
+                <span class="font-semibold" id="result-loan-amount">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Thời gian vay:</span>
+                <span class="font-semibold" id="result-loan-term">0 năm</span>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-700" id="monthly-payment-label">Trả hàng tháng:</span>
+                <span class="font-semibold text-blue-600" id="result-monthly-payment">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Tổng tiền lãi:</span>
+                <span class="font-semibold text-orange-600" id="result-total-interest">0 ₫</span>
+              </div>
+              <div class="flex justify-between border-t pt-3">
+                <span class="text-lg font-bold text-green-800">Tổng tiền phải trả:</span>
+                <span class="text-lg font-bold text-green-600" id="result-total-payment">0 ₫</span>
+              </div>
+              <div id="decreasing-note" class="text-sm text-gray-600 mt-2 hidden">
+                * Gốc giảm dần: Khoản thanh toán hàng tháng sẽ giảm dần theo thời gian
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <button
+              type="button"
+              id="toggle-schedule-btn"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors font-medium"
+            >
+              Xem bảng kế hoạch trả nợ chi tiết
+            </button>
+          </div>
+        </div>
+
+        <!-- Bảng kế hoạch - Hidden by default -->
+        <div id="schedule-section" class="bg-white rounded-lg shadow-lg p-6 mb-8 hidden">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800">Bảng kế hoạch trả nợ chi tiết</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr class="border-b">
+                  <th class="text-center py-2 px-4">Kỳ</th>
+                  <th class="text-right py-2 px-4">Gốc trả</th>
+                  <th class="text-right py-2 px-4">Lãi trả</th>
+                  <th class="text-right py-2 px-4">Tổng trả</th>
+                  <th class="text-right py-2 px-4">Dư nợ</th>
+                </tr>
+              </thead>
+              <tbody id="schedule-tbody">
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-4 text-sm text-gray-600">
+            <p class="italic">*Lưu ý: Kết quả trên chỉ là ước tính. Lãi suất thực tế và các điều khoản vay có thể thay đổi tùy thuộc vào ngân hàng và thời điểm vay. Vui lòng liên hệ trực tiếp để được tư vấn chi tiết.</p>
+          </div>
+        </div>
+
+        <!-- Thông tin lãi suất -->
+        <div class="bg-white rounded-lg shadow-lg p-6 my-8">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800">Thông Tin Lãi Suất Hiện Tại</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h3 class="font-semibold text-green-800 mb-2">Lãi Suất Ưu Đãi</h3>
+                <p class="text-2xl font-bold text-green-600">8.5% - 12%</p>
+                <p class="text-sm text-green-700">Áp dụng cho khách hàng có ưu đãi</p>
+              </div>
+              <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h3 class="font-semibold text-blue-800 mb-2">Thời Gian Vay</h3>
+                <p class="text-2xl font-bold text-blue-600">1 - 7 năm</p>
+                <p class="text-sm text-blue-700">Linh hoạt theo nhu cầu khách hàng</p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                <h3 class="font-semibold text-purple-800 mb-2">Tỷ Lệ Vay Tối Đa</h3>
+                <p class="text-2xl font-bold text-purple-600">85%</p>
+                <p class="text-sm text-purple-700">Trả trước tối thiểu 15%</p>
+              </div>
+              <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                <h3 class="font-semibold text-orange-800 mb-2">Phương Thức Trả</h3>
+                <p class="text-lg font-bold text-orange-600">Gốc giảm dần</p>
+                <p class="text-sm text-orange-700">Hoặc gốc + lãi cố định</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Điều kiện vay -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800">Điều Kiện Vay</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="font-semibold text-gray-700 mb-3">Hồ Sơ Cần Thiết</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-start">
+                  <span class="text-primary mr-2">✓</span>
+                  CMND/CCCD, Hộ khẩu
+                </li>
+                <li class="flex items-start">
+                  <span class="text-primary mr-2">✓</span>
+                  Giấy đăng ký kinh doanh (nếu có)
+                </li>
+                <li class="flex items-start">
+                  <span class="text-primary mr-2">✓</span>
+                  Chứng minh thu nhập
+                </li>
+                <li class="flex items-start">
+                  <span class="text-primary mr-2">✓</span>
+                  Bảng kê tài sản đảm bảo
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-700 mb-3">Yêu Cầu Khách Hàng</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-start">
+                  <span class="text-primary mr-2">✓</span>
+                  Tuổi từ 18 - 65 tuổi
+                </li>
+                <li class="flex items-start">
+                  <span class="text-primary mr-2">✓</span>
+                  Có thu nhập ổn định
+                </li>
+                <li class="flex items-start">
+                  <span class="text-primary mr-2">✓</span>
+                  Không nợ xấu tại CIC
+                </li>
+                <li class="flex items-start">
+                  <span class="text-primary mr-2">✓</span>
+                  Có tài sản đảm bảo
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ưu đãi -->
+        <div class="bg-yellow-50 rounded-lg p-6 mb-8">
+          <h2 class="text-xl font-semibold mb-4 text-yellow-800">Ưu Đãi Đặc Biệt</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-yellow-600">0%</div>
+              <p class="text-yellow-700">Phí thẩm định</p>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-yellow-600">24h</div>
+              <p class="text-yellow-700">Thời gian duyệt hồ sơ</p>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-yellow-600">100%</div>
+              <p class="text-yellow-700">Hỗ trợ thủ tục</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center">
+          <div class="bg-primary/10 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-primary mb-2">Cần Tư Vấn Gói Vay?</h3>
+            <p class="text-gray-600 mb-4">Liên hệ ngay để được hỗ trợ tính toán và tư vấn gói vay phù hợp</p>
+            <a
+              href={`tel:${phone}`}
+              class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              Gọi ngay: {phoneDisplay}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Vanilla JS - Progressive enhancement
+      const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+      };
+
+      const parseCurrency = (value) => {
+        return parseInt(value.replace(/[^\d]/g, '')) || 0;
+      };
+
+      const formatInput = (input) => {
+        input.addEventListener('input', (e) => {
+          const val = e.target.value.replace(/[^\d]/g, '');
+          e.target.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        });
+      };
+
+      let scheduleData = [];
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('loan-calculation-form');
+        const vehiclePriceInput = document.getElementById('vehiclePrice');
+        const downPaymentInput = document.getElementById('downPayment');
+        const toggleBtn = document.getElementById('toggle-schedule-btn');
+
+        formatInput(vehiclePriceInput);
+        formatInput(downPaymentInput);
+
+        toggleBtn?.addEventListener('click', () => {
+          const scheduleSection = document.getElementById('schedule-section');
+          const isHidden = scheduleSection.classList.contains('hidden');
+          scheduleSection.classList.toggle('hidden');
+          toggleBtn.textContent = isHidden ? 'Ẩn bảng kế hoạch trả nợ chi tiết' : 'Xem bảng kế hoạch trả nợ chi tiết';
+        });
+
+        form?.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(form);
+          const vehiclePrice = parseCurrency(formData.get('vehiclePrice'));
+          const downPayment = parseCurrency(formData.get('downPayment'));
+          const interestRate = parseFloat(formData.get('interestRate'));
+          const loanTerm = parseInt(formData.get('loanTerm'));
+          const paymentMethod = formData.get('paymentMethod');
+
+          const loanAmount = vehiclePrice - downPayment;
+          const rate = interestRate / 100 / 12;
+          const months = loanTerm * 12;
+
+          let monthlyPayment = 0;
+          let totalPayment = 0;
+          let totalInterest = 0;
+          scheduleData = [];
+
+          if (paymentMethod === 'equal_principal_interest') {
+            monthlyPayment = (loanAmount * rate * Math.pow(1 + rate, months)) / (Math.pow(1 + rate, months) - 1);
+            totalPayment = monthlyPayment * months;
+            totalInterest = totalPayment - loanAmount;
+
+            let remainingBalance = loanAmount;
+            for (let i = 1; i <= months; i++) {
+              const interestForMonth = remainingBalance * rate;
+              const principalForMonth = monthlyPayment - interestForMonth;
+              remainingBalance -= principalForMonth;
+
+              scheduleData.push({
+                month: i,
+                principal: principalForMonth,
+                interest: interestForMonth,
+                total: monthlyPayment,
+                balance: Math.max(0, remainingBalance)
+              });
+            }
+          } else {
+            const principalPayment = loanAmount / months;
+            let remainingBalance = loanAmount;
+            totalInterest = 0;
+
+            for (let i = 1; i <= months; i++) {
+              const interestForMonth = remainingBalance * rate;
+              const totalForMonth = principalPayment + interestForMonth;
+              remainingBalance -= principalPayment;
+              totalInterest += interestForMonth;
+
+              scheduleData.push({
+                month: i,
+                principal: principalPayment,
+                interest: interestForMonth,
+                total: totalForMonth,
+                balance: Math.max(0, remainingBalance)
+              });
+            }
+
+            totalPayment = loanAmount + totalInterest;
+            monthlyPayment = scheduleData[0]?.total || 0;
+          }
+
+          document.getElementById('result-vehicle-price').textContent = formatCurrency(vehiclePrice);
+          document.getElementById('result-down-payment').textContent = formatCurrency(downPayment);
+          document.getElementById('result-loan-amount').textContent = formatCurrency(loanAmount);
+          document.getElementById('result-loan-term').textContent = `${loanTerm} năm`;
+          document.getElementById('result-monthly-payment').textContent = formatCurrency(monthlyPayment);
+          document.getElementById('result-total-interest').textContent = formatCurrency(totalInterest);
+          document.getElementById('result-total-payment').textContent = formatCurrency(totalPayment);
+
+          const monthlyLabel = document.getElementById('monthly-payment-label');
+          monthlyLabel.textContent = paymentMethod === 'decreasing_principal' ? 'Trả hàng tháng (tháng đầu):' : 'Trả hàng tháng:';
+
+          document.getElementById('decreasing-note').classList.toggle('hidden', paymentMethod !== 'decreasing_principal');
+          document.getElementById('results-section').classList.remove('hidden');
+
+          const tbody = document.getElementById('schedule-tbody');
+          tbody.innerHTML = scheduleData.map(item => `
+            <tr class="border-b">
+              <td class="text-center py-2 px-4 font-medium">${item.month}</td>
+              <td class="text-right py-2 px-4">${formatCurrency(item.principal)}</td>
+              <td class="text-right py-2 px-4">${formatCurrency(item.interest)}</td>
+              <td class="text-right py-2 px-4 font-semibold">${formatCurrency(item.total)}</td>
+              <td class="text-right py-2 px-4">${formatCurrency(item.balance)}</td>
+            </tr>
+          `).join('');
+
+          document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      });
+    </script>
+  </Layout>
+</BaseLayout>

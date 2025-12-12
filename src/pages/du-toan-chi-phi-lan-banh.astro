@@ -1,0 +1,328 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Layout from '../components/Layout.tsx';
+import { getEntry } from 'astro:content';
+
+const settingsEntry = await getEntry('settings', 'site-settings');
+const settings = settingsEntry?.data;
+const phone = settings?.contact_section?.phone || '0815555528';
+const phoneDisplay = settings?.contact_section?.phoneDisplay || '0815555528';
+
+const title = 'Dự Toán Chi Phí Lăn Bánh | soosanmotor.com';
+const description = 'Công cụ dự toán chi phí lăn bánh sơ mi rơ moóc, cẩu, xe tải, và các loại xe chuyên dụng khác. Tính toán chính xác các khoản phí cần thiết.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Layout client:load siteSettings={settings}>
+    {/* Page Header */}
+    <div class="page-header-bg page-header-text py-12">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-3xl font-bold mb-4">Dự Toán Chi Phí Lăn Bánh</h1>
+        <p class="text-lg max-w-2xl mx-auto opacity-80">
+          Công cụ hỗ trợ tính toán chi phí lăn bánh cho sơ mi rơ moóc, cẩu, xe tải, và các loại xe chuyên dụng khác
+        </p>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+      <div class="max-w-4xl mx-auto">
+
+        <!-- Form tính toán - Static HTML for SEO -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 class="text-xl font-semibold mb-6 text-gray-800">Thông Tin Xe</h2>
+          <form id="cost-estimation-form" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="text-sm font-medium" for="vehiclePrice">Giá xe (đã bao gồm VAT)</label>
+                <input
+                  type="text"
+                  id="vehiclePrice"
+                  name="vehiclePrice"
+                  placeholder="Nhập giá xe (VNĐ)"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-medium" for="province">Tỉnh/thành phố đăng ký</label>
+                <select
+                  id="province"
+                  name="province"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                >
+                  <option value="">Chọn tỉnh/thành phố</option>
+                  <option value="hanoi">Hà Nội</option>
+                  <option value="hochiminh">TP. Hồ Chí Minh</option>
+                  <option value="danang">Đà Nẵng</option>
+                  <option value="haiphong">Hải Phòng</option>
+                  <option value="cantho">Cần Thơ</option>
+                  <option value="others">Tỉnh khác</option>
+                </select>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-medium" for="vehicleType">Loại xe</label>
+                <select
+                  id="vehicleType"
+                  name="vehicleType"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                >
+                  <option value="">Chọn loại xe</option>
+                  <option value="truck">Xe tải</option>
+                  <option value="crane">Xe cẩu</option>
+                  <option value="trailer">Sơ mi rơ mooc</option>
+                  <option value="tractor">Xe đầu kéo</option>
+                </select>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-medium" for="weightCategory">Phân loại tải trọng</label>
+                <select
+                  id="weightCategory"
+                  name="weightCategory"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                >
+                  <option value="">Chọn tải trọng</option>
+                  <option value="UNDER_4_TONS">Dưới 4 tấn</option>
+                  <option value="FROM_4_TO_UNDER_8_5_TONS">4 - 8.5 tấn</option>
+                  <option value="FROM_8_5_TO_UNDER_13_TONS">8.5 - 13 tấn</option>
+                  <option value="FROM_13_TO_UNDER_19_TONS">13 - 19 tấn</option>
+                  <option value="FROM_19_TO_UNDER_27_TONS">19 - 27 tấn</option>
+                  <option value="FROM_27_TONS_UP">Trên 27 tấn</option>
+                </select>
+              </div>
+
+              <div class="space-y-2 md:col-span-2">
+                <label class="text-sm font-medium" for="otherFees">Phí dịch vụ khác (VNĐ)</label>
+                <input
+                  type="text"
+                  id="otherFees"
+                  name="otherFees"
+                  placeholder="Nhập phí dịch vụ khác (không bắt buộc)"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors font-medium"
+            >
+              <span class="inline-flex items-center justify-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+                Tính Toán Chi Phí Lăn Bánh
+              </span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Kết quả - Hidden by default -->
+        <div id="results-section" class="bg-green-50 rounded-lg shadow-lg p-6 mb-8 hidden">
+          <h2 class="text-xl font-semibold mb-4 text-green-800">Kết Quả Tính Toán</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-700">Giá trị xe:</span>
+                <span class="font-semibold" id="result-vehicle-price">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Phí trước bạ (2%):</span>
+                <span class="font-semibold" id="result-before-registration">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Phí biển số:</span>
+                <span class="font-semibold" id="result-plate-fee">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Phí đăng kiểm:</span>
+                <span class="font-semibold" id="result-inspection">0 ₫</span>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-700">Bảo hiểm TNDS:</span>
+                <span class="font-semibold" id="result-insurance">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Phí bảo trì đường bộ:</span>
+                <span class="font-semibold" id="result-road-maintenance">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-700">Phí dịch vụ khác:</span>
+                <span class="font-semibold" id="result-other-fees">0 ₫</span>
+              </div>
+              <div class="flex justify-between border-t pt-3">
+                <span class="text-lg font-bold text-green-800">Tổng chi phí:</span>
+                <span class="text-lg font-bold text-green-600" id="result-total-cost">0 ₫</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="trailer-note" class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200 hidden">
+            <p class="text-sm text-blue-700">
+              <strong>Lưu ý đặc biệt cho sơ mi rơ mooc:</strong> Sơ mi rơ mooc không phải đóng phí bảo trì đường bộ riêng và thường được bảo hiểm chung với xe đầu kéo. Chi phí có thể thấp hơn so với các loại xe khác.
+            </p>
+          </div>
+
+          <div id="tractor-note" class="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200 hidden">
+            <p class="text-sm text-yellow-700">
+              <strong>Lưu ý cho xe đầu kéo:</strong> Xe đầu kéo có mức phí đăng kiểm và bảo hiểm cao hơn xe tải thường do tính chất vận hành đặc biệt. Phí bảo hiểm đã bao gồm cả rơ mooc kéo theo.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 my-8">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800">Các Khoản Chi Phí Lăn Bánh</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="border-l-4 border-primary pl-4">
+                <h3 class="font-semibold text-gray-700">Phí Trước Bạ</h3>
+                <p class="text-sm text-gray-600">2% giá trị xe cho tất cả các loại xe</p>
+              </div>
+              <div class="border-l-4 border-primary pl-4">
+                <h3 class="font-semibold text-gray-700">Bảo Hiểm Bắt Buộc</h3>
+                <p class="text-sm text-gray-600">Tùy theo loại xe và tải trọng (mooc có thể miễn)</p>
+              </div>
+              <div class="border-l-4 border-primary pl-4">
+                <h3 class="font-semibold text-gray-700">Phí Đăng Ký</h3>
+                <p class="text-sm text-gray-600">20.000 - 50.000 VND</p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="border-l-4 border-primary pl-4">
+                <h3 class="font-semibold text-gray-700">Phí Đăng Kiểm</h3>
+                <p class="text-sm text-gray-600">Tùy theo loại xe và tải trọng</p>
+              </div>
+              <div class="border-l-4 border-primary pl-4">
+                <h3 class="font-semibold text-gray-700">Phí Biển Số</h3>
+                <p class="text-sm text-gray-600">Tùy theo địa phương đăng ký</p>
+              </div>
+              <div class="border-l-4 border-primary pl-4">
+                <h3 class="font-semibold text-gray-700">Phí Bảo Trì Đường Bộ</h3>
+                <p class="text-sm text-gray-600">Tùy theo tải trọng xe (mooc miễn phí)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-blue-50 rounded-lg p-6 mb-8">
+          <h2 class="text-xl font-semibold mb-4 text-blue-800">Lưu Ý Quan Trọng</h2>
+          <ul class="space-y-2 text-blue-700">
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2">•</span>
+              Chi phí có thể thay đổi theo địa phương và thời điểm
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2">•</span>
+              Xe đầu kéo có phí đăng kiểm cao hơn xe tải thường
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2">•</span>
+              Sơ mi rơ mooc thường có chi phí thấp hơn vì không có động cơ riêng
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2">•</span>
+              Xe cẩu có cùng mức phí như xe tải cùng tải trọng
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2">•</span>
+              Phí bảo hiểm xe đầu kéo đã bao gồm rơ mooc kéo theo
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-500 mr-2">•</span>
+              Liên hệ với chúng tôi để được tư vấn chi tiết
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-center">
+          <div class="bg-primary/10 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-primary mb-2">Cần Tư Vấn Chi Tiết?</h3>
+            <p class="text-gray-600 mb-4">Liên hệ ngay với chúng tôi để được báo giá chính xác</p>
+            <a
+              href={`tel:${phone}`}
+              class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              Gọi ngay: {phoneDisplay}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Vanilla JS - No React/framework needed
+      const PROVINCES = {
+        'hanoi': { area: 'HANOI', fee: 2000000 },
+        'hochiminh': { area: 'HOCHIMINH', fee: 2500000 },
+        'danang': { area: 'DANANG', fee: 1500000 },
+        'haiphong': { area: 'HAIPHONG', fee: 1200000 },
+        'cantho': { area: 'CANTHO', fee: 1000000 },
+        'others': { area: 'OTHERS', fee: 500000 }
+      };
+
+      const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+      };
+
+      const parseCurrency = (value) => {
+        return parseInt(value.replace(/[^\d]/g, '')) || 0;
+      };
+
+      const formatInput = (input) => {
+        input.addEventListener('input', (e) => {
+          const val = e.target.value.replace(/[^\d]/g, '');
+          e.target.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        });
+      };
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('cost-estimation-form');
+        const vehiclePriceInput = document.getElementById('vehiclePrice');
+        const otherFeesInput = document.getElementById('otherFees');
+
+        formatInput(vehiclePriceInput);
+        formatInput(otherFeesInput);
+
+        form?.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(form);
+          const vehiclePrice = parseCurrency(formData.get('vehiclePrice'));
+          const province = formData.get('province');
+          const vehicleType = formData.get('vehicleType');
+          const otherFees = parseCurrency(formData.get('otherFees') || '0');
+
+          const beforeRegistrationFee = vehiclePrice * 0.02;
+          const plateFee = PROVINCES[province]?.fee || 500000;
+          const roadMaintenanceFee = vehicleType === 'trailer' ? 0 : 3600000;
+          const inspectionFee = 540000;
+          const insuranceFee = 1500000 * 1.10;
+
+          const totalCost = vehiclePrice + beforeRegistrationFee + plateFee + roadMaintenanceFee + inspectionFee + insuranceFee + otherFees;
+
+          document.getElementById('result-vehicle-price').textContent = formatCurrency(vehiclePrice);
+          document.getElementById('result-before-registration').textContent = formatCurrency(beforeRegistrationFee);
+          document.getElementById('result-plate-fee').textContent = formatCurrency(plateFee);
+          document.getElementById('result-inspection').textContent = formatCurrency(inspectionFee);
+          document.getElementById('result-insurance').textContent = formatCurrency(insuranceFee);
+          document.getElementById('result-road-maintenance').textContent = formatCurrency(roadMaintenanceFee);
+          document.getElementById('result-other-fees').textContent = formatCurrency(otherFees);
+          document.getElementById('result-total-cost').textContent = formatCurrency(totalCost);
+
+          document.getElementById('results-section').classList.remove('hidden');
+          document.getElementById('trailer-note').classList.toggle('hidden', vehicleType !== 'trailer');
+          document.getElementById('tractor-note').classList.toggle('hidden', vehicleType !== 'tractor');
+
+          document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      });
+    </script>
+  </Layout>
+</BaseLayout>

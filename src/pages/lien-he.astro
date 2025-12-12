@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Layout from '../components/Layout.tsx';
+import ContactForm from '../components/ContactForm.tsx';
+import { Card } from '../components/ui/card';
+import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { getEntry } from 'astro:content';
+
+const settingsEntry = await getEntry('settings', 'site-settings');
+const settings = settingsEntry?.data;
+const phone = settings?.contact_section?.phone || '0815555528';
+const phoneDisplay = settings?.contact_section?.phoneDisplay || '0815555528';
+const email = settings?.contact_section?.email || 'sales@soosanmotor.com';
+---
+
+<BaseLayout
+  title="Liên Hệ | soosanmotor.com - Nhà sản xuất sơ mi rơ moóc, cẩu, thùng xe tải đông lạnh, Xe xitéc (bồn) chở xăng dầu, xe chuyên dụng hàng đầu tại Việt Nam"
+  description={`Liên hệ với soosanmotor.com để được tư vấn và báo giá tốt nhất cho xe tải, xe cẩu, sơ mi rơ mooc, xe xitéc (bồn) chở xăng dầu và các loại xe chuyên dụng khác. Hotline: ${phoneDisplay}`}
+>
+  <Layout client:load siteSettings={settings}>
+    {/* Page Header */}
+    <div class="page-header-bg page-header-text py-12">
+      <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-2">Liên Hệ</h1>
+        <p class="text-gray-300">
+          Liên hệ với chúng tôi để được tư vấn và báo giá tốt nhất
+        </p>
+      </div>
+    </div>
+
+    {/* Contact Info Cards */}
+    <div class="container mx-auto py-12 px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <Card className="p-6 flex flex-col items-center text-center" client:load>
+          <div class="w-14 h-14 flex items-center justify-center bg-red-50 text-primary rounded-full mb-4">
+            <Phone className="w-6 h-6" />
+          </div>
+          <h3 class="text-lg font-bold mb-1">Điện thoại</h3>
+          <p class="text-gray-600">
+            <a
+              href={`tel:${phone}`}
+              class="hover:underline font-semibold text-black"
+              aria-label={`Gọi ngay ${phoneDisplay}`}
+            >{phoneDisplay}</a>
+          </p>
+        </Card>
+
+        <Card className="p-6 flex flex-col items-center text-center" client:load>
+          <div class="w-14 h-14 flex items-center justify-center bg-red-50 text-primary rounded-full mb-4">
+            <Mail className="w-6 h-6" />
+          </div>
+          <h3 class="text-lg font-bold mb-1">Email</h3>
+          <p class="text-gray-600">{email}</p>
+        </Card>
+
+        <Card className="p-6 flex flex-col items-center text-center" client:load>
+          <div class="w-14 h-14 flex items-center justify-center bg-red-50 text-primary rounded-full mb-4">
+            <MapPin className="w-6 h-6" />
+          </div>
+          <h3 class="text-lg font-bold mb-1">Địa chỉ</h3>
+          <p class="text-gray-600">Cụm công nghiệp Hạp Lĩnh, Phường Hạp Lĩnh, Tỉnh Bắc Ninh, Việt Nam</p>
+        </Card>
+
+        <Card className="p-6 flex flex-col items-center text-center" client:load>
+          <div class="w-14 h-14 flex items-center justify-center bg-red-50 text-primary rounded-full mb-4">
+            <Clock className="w-6 h-6" />
+          </div>
+          <h3 class="text-lg font-bold mb-1">Giờ làm việc</h3>
+          <p class="text-gray-600">Thứ Hai - Thứ Bảy: 8:00 - 18:00</p>
+        </Card>
+      </div>
+
+      {/* Contact Form & Map */}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div>
+          <h2 class="text-2xl font-bold mb-6">Gửi yêu cầu tư vấn</h2>
+          <p class="text-gray-600 mb-6">
+            Vui lòng điền đầy đủ thông tin bên dưới.
+            Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.
+          </p>
+
+          <ContactForm client:load source="trang-lien-he" />
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold mb-6">Bản đồ</h2>
+          <div class="aspect-video overflow-hidden rounded-lg shadow-md">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1905185.2025095064!2d103.76776639375001!3d21.149817400000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31350b71d69836ab%3A0xdc5e9d49bf6747be!2sSOOSAN%20VINA%20MOTOR!5e0!3m2!1sen!2s!4v1755425329698!5m2!1sen!2s"
+              width="100%"
+              height="100%"
+              style="border: 0;"
+              allowfullscreen
+              loading="lazy"
+              title="Địa chỉ Soosan (Doosung)"
+            ></iframe>
+          </div>
+
+          <div class="mt-6">
+            <h3 class="text-xl font-bold mb-3">Thông tin liên hệ</h3>
+            <div class="space-y-3">
+              <p class="flex items-start">
+                <Phone className="h-5 w-5 mr-2 text-primary flex-shrink-0" />
+                <span class="text-gray-700">
+                  Hotline: <a
+                    href={`tel:${phone}`}
+                    class="hover:underline font-semibold text-black"
+                    aria-label={`Gọi ngay ${phoneDisplay}`}
+                  >{phoneDisplay}</a> (Tư vấn miễn phí 24/7)
+                </span>
+              </p>
+              <p class="flex items-start">
+                <Mail className="h-5 w-5 mr-2 text-primary flex-shrink-0" />
+                <span class="text-gray-700">Email: {email}</span>
+              </p>
+              <p class="flex items-start">
+                <MapPin className="h-5 w-5 mr-2 text-primary flex-shrink-0 mt-1" />
+                <span class="text-gray-700">
+                  Địa chỉ: Cụm công nghiệp Hạp Lĩnh, Phường Hạp Lĩnh, Tỉnh Bắc Ninh, Việt Nam
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Layout>
+</BaseLayout>

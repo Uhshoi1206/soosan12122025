@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CatalogPageWithProvider from '../components/catalog/CatalogPageWithProvider.tsx';
+import { getVisibleProducts } from '../utils/contentCollections';
+import { getEntry } from 'astro:content';
+
+const visibleTrucks = await getVisibleProducts();
+const settingsEntry = await getEntry('settings', 'site-settings');
+const settings = settingsEntry?.data;
+---
+
+<BaseLayout
+  title="Danh Mục Xe | Xe Tải, Cẩu, Mooc & Đầu Kéo"
+  description="Khám phá danh mục đầy đủ các loại xe tải, xe cẩu, sơ mi rơ mooc, xe đầu kéo từ các thương hiệu uy tín. Giá tốt, chất lượng đảm bảo."
+>
+  <CatalogPageWithProvider
+    client:idle
+    initialVehicles={visibleTrucks}
+    initialVehicleCount={visibleTrucks.length}
+    siteSettings={settings}
+  />
+</BaseLayout>

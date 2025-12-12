@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomePageWithProvider from '../components/home/HomePageWithProvider.tsx';
+
+import { getOrganizedProducts, getLegacyBlogData, getVisibleCategories, getActiveBanners } from '../utils/contentCollections';
+import { getBlogCategories } from '../utils/blogCategories';
+import { getEntry } from 'astro:content';
+
+const { featuredTrucks, specializedCranes, semiTrailers, tractors, trucks } = await getOrganizedProducts();
+const blogData = await getLegacyBlogData();
+const sortedPosts = blogData.allBlogPosts;
+const { categoryMap, categoryInfoMap } = await getBlogCategories();
+
+const allCategories = await getVisibleCategories();
+const baseKeys = new Set(['xe-tai', 'xe-cau', 'mooc', 'dau-keo']);
+const extraCategories = allCategories.filter(cat => !baseKeys.has(cat.data.id));
+
+// Get list of enabled types
+const enabledTypes = allCategories.map(cat => cat.data.id);
+
+// Load active banners
+const banners = await getActiveBanners();
+
+// Load site settings from CMS
+const siteSettingsEntry = await getEntry('settings', 'site-settings');
+const siteSettings = siteSettingsEntry?.data;
+---
+
+<BaseLayout
+  title="Trang Chủ | soosanmotor.com - Nhà sản xuất sơ mi rơ moóc, cẩu, thùng xe tải đông lạnh, Xe xitéc (bồn) chở xăng dầu, xe chuyên dụng hàng đầu tại Việt Nam"
+  description="Chuyên sản xuất sơ mi rơ moóc, cẩu, thùng xe tải đông lạnh, Xe xitéc (bồn) chở xăng dầu và các loại xe chuyên dụng khác với đa dạng thương hiệu: Soosan, Doosung, Hyundai, Hino, Isuzu, Dongfeng, Chenglong... Giá tốt nhất thị trường!"
+>
+  <HomePageWithProvider
+    client:idle
+    featuredTrucks={featuredTrucks}
+    specializedCranes={specializedCranes}
+    semiTrailers={semiTrailers}
+    tractors={tractors}
+    trucks={trucks}
+    sortedPosts={sortedPosts}
+    categoryMap={categoryMap}
+    categoryInfoMap={categoryInfoMap}
+    extraCategories={extraCategories}
+    enabledTypes={enabledTypes}
+    banners={banners}
+    siteSettings={siteSettings}
+  />
+</BaseLayout>
+

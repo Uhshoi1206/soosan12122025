@@ -1,0 +1,169 @@
+---
+/**
+ * ProductLayout.astro
+ * Extended layout for product detail pages with full Schema.org support
+ */
+import '../styles/global.css';
+import '../components/blog/BlogStyles.css';
+import FloatingWidgets from '../components/FloatingWidgets';
+import GlobalSearch from '../components/GlobalSearch.astro';
+import SocialMeta from '../components/seo/SocialMeta.astro';
+import ProductSchema from '../components/seo/ProductSchema.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+interface Props {
+  product: {
+    id: string;
+    name: string;
+    slug: string;
+    type: string;
+    brand: string | string[];
+    description?: string;
+    detailedDescription?: string;
+    price?: number | null;
+    priceText?: string;
+    thumbnailUrl: string;
+    images: string[];
+    weight: number;
+    weightText: string;
+    dimensions: string;
+    length: number;
+    width: number;
+    height: number;
+    origin?: string;
+    isNew?: boolean;
+    isHot?: boolean;
+    engineModel?: string;
+    enginePower?: string;
+    engineCapacity?: string;
+    fuel?: string;
+    transmission?: string;
+    trailerSpec?: any;
+    craneSpec?: any;
+    features?: string[];
+  };
+  categoryName: string;
+}
+
+const { product, categoryName } = Astro.props;
+
+const siteUrl = 'https://soosanmotor.com';
+const currentPath = Astro.url.pathname;
+const canonicalUrl = `${siteUrl}${currentPath}`;
+
+const title = `${product.name} - ${categoryName} | soosanmotor.com`;
+const description = product.description || `${product.name} - ${categoryName}. Tải trọng: ${product.weightText}. Giá: ${product.priceText || 'Liên hệ'}. Liên hệ ngay để nhận báo giá tốt nhất!`;
+const brandName = Array.isArray(product.brand) ? product.brand[0] : product.brand;
+
+// Robots directive
+const robotsContent = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+
+// Get site settings from CMS for colors
+const siteSettingsEntry = await getEntry('settings', 'site-settings');
+const siteSettings = siteSettingsEntry?.data;
+const colors = siteSettings?.colors_section || {
+  primaryColor: '#D84315',
+  header: { bgColor: '#FFFFFF', textColor: '#1F2937', hoverColor: '#D84315' },
+  footer: { bgColor: '#111827', textColor: '#FFFFFF', mutedColor: '#9CA3AF' },
+  pageHeader: { bgColor: '#1F2937', textColor: '#FFFFFF' },
+  buttons: { primaryBg: '#D84315', primaryText: '#FFFFFF', secondaryBg: '#F3F4F6', secondaryText: '#1F2937' },
+  cards: { bgColor: '#FFFFFF', borderColor: '#E5E7EB' }
+};
+
+// Get all products for order notifications
+const allProducts = await getCollection('products');
+const productsForNotifications = allProducts
+  .filter(p => !p.data.isHidden)
+  .map(p => ({
+    name: p.data.name,
+    type: p.data.type,
+    slug: p.data.slug
+  }));
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <!-- Primary Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Robots & Crawlers -->
+    <meta name="robots" content={robotsContent} />
+    <meta name="googlebot" content={robotsContent} />
+    <meta name="bingbot" content={robotsContent} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Language & Regional -->
+    <meta http-equiv="Content-Language" content="vi" />
+    <meta name="language" content="Vietnamese" />
+    <meta name="geo.region" content="VN" />
+    <meta name="geo.placename" content="Vietnam" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="msapplication-TileColor" content="#dc2626" />
+    
+    <!-- Open Graph & Twitter Cards -->
+    <SocialMeta 
+      title={title}
+      description={description}
+      image={product.thumbnailUrl}
+      url={currentPath}
+      type="product"
+      brand={brandName}
+      price={product.price}
+      priceText={product.priceText}
+    />
+    
+    <!-- Product Schema.org JSON-LD -->
+    <ProductSchema product={product} categoryName={categoryName} />
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://cdn.soosanmotor.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.soosanmotor.com" />
+    
+    <!-- AI Crawlers Meta (GEO) -->
+    <meta name="ai-content-declaration" content="human-created" />
+    <meta name="generator" content="Astro" />
+    
+    <!-- Scripts -->
+    <script is:inline src="/search-enhanced.js"></script>
+  </head>
+  <body style={`
+    --btn-primary-bg: ${colors.buttons?.primaryBg || '#D84315'};
+    --btn-primary-text: ${colors.buttons?.primaryText || '#FFFFFF'};
+    --btn-secondary-bg: ${colors.buttons?.secondaryBg || '#F3F4F6'};
+    --btn-secondary-text: ${colors.buttons?.secondaryText || '#1F2937'};
+    --color-primary: ${colors.primaryColor || '#D84315'};
+    --header-bg: ${colors.header?.bgColor || '#FFFFFF'};
+    --header-text: ${colors.header?.textColor || '#1F2937'};
+    --header-hover: ${colors.header?.hoverColor || '#D84315'};
+    --footer-bg: ${colors.footer?.bgColor || '#111827'};
+    --footer-text: ${colors.footer?.textColor || '#FFFFFF'};
+    --footer-muted: ${colors.footer?.mutedColor || '#9CA3AF'};
+    --page-header-bg: ${colors.pageHeader?.bgColor || '#1F2937'};
+    --page-header-text: ${colors.pageHeader?.textColor || '#FFFFFF'};
+    --card-bg: ${colors.cards?.bgColor || '#FFFFFF'};
+    --card-border: ${colors.cards?.borderColor || '#E5E7EB'};
+  `}>
+    <slot />
+
+    <!-- Floating widgets: QuickContact + OrderNotification -->
+    <FloatingWidgets client:load products={productsForNotifications} />
+
+    <!-- Global search enhancement -->
+    <GlobalSearch />
+  </body>
+</html>
+

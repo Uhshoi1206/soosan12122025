@@ -1,0 +1,118 @@
+# Soosan Motor - robots.txt
+# Last updated: 2025-12-09
+
+# ===========================================
+# Traditional Search Engine Crawlers
+# ===========================================
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: coccoc
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+# ===========================================
+# Social Media Crawlers
+# ===========================================
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Pinterest
+Allow: /
+
+# ===========================================
+# AI Crawlers (GEO - Generative Engine Optimization)
+# ===========================================
+
+# OpenAI ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Google Gemini/Bard
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic Claude
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# ByteDance/TikTok
+User-agent: Bytespider
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+# Apple AI
+User-agent: Applebot-Extended
+Allow: /
+
+# ===========================================
+# Default & Restrictions
+# ===========================================
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /loivao/
+Disallow: /_astro/
+Disallow: /*?*
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# ===========================================
+# Sitemap
+# ===========================================
+
+Sitemap: https://soosanmotor.com/sitemap-index.xml

@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Layout from '../components/Layout.tsx';
+import { getVisibleBlogPosts } from '../utils/contentCollections';
+import { getBlogCategories } from '../utils/blogCategories';
+import BlogCategoryFilter from '../components/blog/BlogCategoryFilter.tsx';
+import BlogSearch from '../components/blog/BlogSearch.tsx';
+import { OptimizedImage } from '../components/ui/optimized-image.tsx';
+import { getEntry } from 'astro:content';
+
+const settingsEntry = await getEntry('settings', 'site-settings');
+const settings = settingsEntry?.data;
+const sortedPosts = await getVisibleBlogPosts();
+const { categories, categoryMap, categoryInfoMap, getCategorySlug } = await getBlogCategories();
+
+const getPostUrl = (post: any) => {
+  const categorySlug = getCategorySlug(post.category);
+  return `/danh-muc-bai-viet/${categorySlug}/${post.slug}`;
+};
+
+const postsByCategory = categories.reduce((acc, cat) => {
+  acc[cat.data.id] = sortedPosts.filter(post => post.category === cat.data.id);
+  return acc;
+}, {} as Record<string, any[]>);
+---
+
+<BaseLayout
+  title="Tin Tức & Blog | Tin tức ngành vận tải, đánh giá xe"
+  description="Cập nhật tin tức mới nhất về ngành vận tải, đánh giá xe tải, xe cẩu, kinh nghiệm lái xe và bảo dưỡng."
+>
+  <Layout client:load siteSettings={settings}>
+    {/* Page Header */}
+    <div class="page-header-bg page-header-text py-12">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl font-bold mb-3">Tin Tức & Blog</h1>
+        <p class="max-w-2xl mx-auto opacity-80">
+          Cập nhật tin tức mới nhất về ngành vận tải, đánh giá xe tải, xe cẩu, kinh nghiệm lái xe và bảo dưỡng
+        </p>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+
+      <BlogSearch
+        client:load
+        posts={sortedPosts.map(post => ({
+          id: post.id,
+          slug: post.slug,
+          title: post.title,
+          description: post.description,
+          category: post.category,
+          categorySlug: getCategorySlug(post.category),
+          images: post.images,
+          publishDate: post.publishDate,
+          views: post.views
+        }))}
+        categories={categories.map(cat => ({
+          id: cat.data.id,
+          name: cat.data.name,
+          slug: cat.data.slug || cat.data.id
+        }))}
+      />
+
+      <BlogCategoryFilter
+        client:load
+        categories={categories.map(cat => ({
+          id: cat.data.id,
+          name: cat.data.name,
+          slug: cat.data.slug || cat.data.id,
+          description: cat.data.description,
+          icon: cat.data.icon,
+          color: cat.data.color,
+          order: cat.data.order
+        }))}
+      />
+
+      <div class="space-y-12">
+        {categories.map((category) => {
+          const posts = postsByCategory[category.data.id];
+          if (!posts || posts.length === 0) return null;
+
+          const featuredPost = posts[0];
+          const sidePosts = posts.slice(1, 4);
+          const categorySlug = category.data.slug || category.data.id;
+
+          return (
+            <section class="mb-12" key={category.data.id} id={`category-${category.data.id}`}>
+              <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">{category.data.name}</h2>
+                <a
+                  href={`/danh-muc-bai-viet/${categorySlug}`}
+                  class="text-primary hover:text-primary/80 flex items-center gap-2 text-sm font-medium transition-colors"
+                >
+                  Xem tất cả
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Featured Post -->
+                <div class="lg:col-span-5">
+                  <a href={getPostUrl(featuredPost)} class="group block h-full">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex flex-col">
+                      <div class="relative aspect-[4/3] overflow-hidden">
+                        <OptimizedImage
+                          client:load
+                          src={featuredPost.images[0]}
+                          alt={featuredPost.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          useCase="gallery"
+                        />
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+                          <h3 class="text-white font-bold text-lg line-clamp-2 group-hover:text-primary/90 transition-colors">
+                            {featuredPost.title}
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="p-4 flex-grow flex flex-col">
+                        <p class="text-gray-600 text-sm line-clamp-2 mb-3 flex-grow">
+                          {featuredPost.description}
+                        </p>
+                        <div class="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-gray-100">
+                          <span class="flex items-center gap-1">
+                            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            {new Date(featuredPost.publishDate).toLocaleDateString('vi-VN')}
+                          </span>
+                          <span class="flex items-center gap-1">
+                            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            {featuredPost.views || '0'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <!-- Side Posts -->
+                <div class="lg:col-span-7 space-y-4">
+                  {sidePosts.map((post) => (
+                    <a
+                      key={post.id}
+                      href={getPostUrl(post)}
+                      class="group block"
+                    >
+                      <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex">
+                        <div class="w-32 sm:w-40 flex-shrink-0">
+                          <div class="relative aspect-square overflow-hidden">
+                            <OptimizedImage
+                              client:load
+                              src={post.images[0]}
+                              alt={post.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              useCase="thumbnail"
+                            />
+                          </div>
+                        </div>
+                        <div class="flex-1 p-4 flex flex-col justify-between">
+                          <div>
+                            <h3 class="font-bold text-gray-900 line-clamp-2 group-hover:text-primary transition-colors mb-2">
+                              {post.title}
+                            </h3>
+                            <p class="text-gray-600 text-sm line-clamp-1 hidden sm:block">
+                              {post.description}
+                            </p>
+                          </div>
+                          <div class="flex items-center justify-between text-xs text-gray-500 mt-2">
+                            <span class="flex items-center gap-1">
+                              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                              </svg>
+                              {new Date(post.publishDate).toLocaleDateString('vi-VN')}
+                            </span>
+                            <span class="flex items-center gap-1">
+                              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                              </svg>
+                              {post.views || '0'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      <div class="mt-12 bg-primary/5 rounded-lg p-8 text-center">
+        <h3 class="text-2xl font-bold mb-3">Cần tư vấn về xe thương mại?</h3>
+        <p class="text-gray-700 mb-6 max-w-xl mx-auto">
+          Liên hệ ngay với chúng tôi để được tư vấn chi tiết về xe tải, xe cẩu, sơ mi rơ mooc và các sản phẩm khác
+        </p>
+        <a
+          href="/lien-he"
+          class="inline-block bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition font-medium"
+        >
+          Liên hệ ngay
+        </a>
+      </div>
+    </div>
+  </Layout>
+</BaseLayout>
+
+<script>
+  function setupCategoryFilters() {
+    const filterButtons = document.querySelectorAll('[data-category-filter]');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const categoryId = (e.currentTarget as HTMLElement).getAttribute('data-category-id');
+        if (categoryId) {
+          const section = document.getElementById(`category-${categoryId}`);
+          if (section) {
+            const yOffset = -100;
+            const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupCategoryFilters);
+  } else {
+    setupCategoryFilters();
+  }
+</script>

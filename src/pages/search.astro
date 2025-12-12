@@ -1,0 +1,222 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import TruckItem from '../components/TruckItem';
+import { getVisibleProducts } from '../utils/contentCollections';
+import { getCollection } from 'astro:content';
+import { getBlogCategories } from '../utils/blogCategories';
+
+let visibleTrucks = [];
+let blogPosts = [];
+let errorMessage = '';
+
+try {
+  visibleTrucks = await getVisibleProducts() || [];
+  const allBlogPosts = await getCollection('blog') || [];
+  const { getCategorySlug } = await getBlogCategories();
+
+  blogPosts = allBlogPosts
+    .filter(post => post?.data && !post.data.isHidden)
+    .map(post => ({
+      slug: post.slug || post.id,
+      title: post.data.title || '',
+      description: post.data.description || '',
+      excerpt: post.data.excerpt || '',
+      category: post.data.category || '',
+      categorySlug: getCategorySlug(post.data.category),
+      publishDate: post.data.publishDate || new Date(),
+      image: post.data.image || ''
+    }));
+} catch (error) {
+  console.error('[search.astro] Error loading data:', error);
+  errorMessage = error instanceof Error ? error.message : 'Unknown error';
+}
+
+const url = Astro.url;
+const searchQuery = url.searchParams.get('q') || '';
+
+function removeVietnameseTones(str: string): string {
+  if (!str) return '';
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toLowerCase();
+}
+
+const normalizedQuery = removeVietnameseTones(searchQuery);
+
+const filteredProducts = searchQuery && visibleTrucks.length > 0 ? visibleTrucks.filter(product => {
+  try {
+    const name = removeVietnameseTones(product?.name || '');
+    const brand = removeVietnameseTones(product?.brand || '');
+    const description = removeVietnameseTones(product?.description || '');
+    const model = removeVietnameseTones(product?.model || '');
+
+    return name.includes(normalizedQuery) ||
+      brand.includes(normalizedQuery) ||
+      description.includes(normalizedQuery) ||
+      model.includes(normalizedQuery);
+  } catch (e) {
+    console.error('[search.astro] Error filtering product:', e);
+    return false;
+  }
+}) : visibleTrucks;
+
+const filteredBlogPosts = searchQuery && blogPosts.length > 0 ? blogPosts.filter(post => {
+  try {
+    const title = removeVietnameseTones(post?.title || '');
+    const description = removeVietnameseTones(post?.description || '');
+    const excerpt = removeVietnameseTones(post?.excerpt || '');
+
+    return title.includes(normalizedQuery) ||
+      description.includes(normalizedQuery) ||
+      excerpt.includes(normalizedQuery);
+  } catch (e) {
+    console.error('[search.astro] Error filtering post:', e);
+    return false;
+  }
+}) : blogPosts;
+
+const totalResults = filteredProducts.length + filteredBlogPosts.length;
+
+console.log('[search.astro] Search results:', {
+  query: searchQuery,
+  normalizedQuery,
+  totalTrucks: visibleTrucks.length,
+  totalBlogs: blogPosts.length,
+  filteredProducts: filteredProducts.length,
+  filteredBlogs: filteredBlogPosts.length,
+  total: totalResults
+});
+---
+
+<BaseLayout
+  title={searchQuery ? `Tìm kiếm: ${searchQuery} | soosanmotor.com` : "Tìm kiếm | soosanmotor.com"}
+  description={`Kết quả tìm kiếm cho "${searchQuery}". Tìm xe tải, xe cẩu, sơ mi rơ mooc, đầu kéo và tin tức phù hợp với nhu cầu của bạn.`}
+>
+  <Header client:load />
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Page Header -->
+    <div class="page-header-bg page-header-text py-12">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl font-bold mb-4">
+          {searchQuery ? `Kết quả tìm kiếm: "${searchQuery}"` : "Tìm Kiếm"}
+        </h1>
+        <p class="max-w-2xl mx-auto opacity-80">
+          Tìm xe tải, xe cẩu, sơ mi rơ mooc, đầu kéo và tin tức phù hợp với nhu cầu của bạn
+        </p>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+
+      {errorMessage && (
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+          <p class="text-red-700">
+            Đã xảy ra lỗi khi tải dữ liệu: {errorMessage}
+          </p>
+        </div>
+      )}
+
+      <div class="space-y-8">
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <p class="text-gray-700">
+            Tìm thấy <span class="font-bold text-primary">{totalResults}</span> kết quả
+            {filteredProducts.length > 0 && (
+              <span> ({filteredProducts.length} sản phẩm</span>
+            )}
+            {filteredProducts.length > 0 && filteredBlogPosts.length > 0 && ', '}
+            {filteredBlogPosts.length > 0 && (
+              <span>{filteredBlogPosts.length} tin tức</span>
+            )}
+            {(filteredProducts.length > 0 || filteredBlogPosts.length > 0) && ')'}
+          </p>
+        </div>
+
+        {totalResults === 0 && (
+          <div class="text-center py-12">
+            <div class="text-gray-400 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-700 mb-2">
+              Không tìm thấy kết quả
+            </h3>
+            <p class="text-gray-500">
+              Không có sản phẩm hoặc tin tức nào phù hợp với từ khóa "{searchQuery}"
+            </p>
+          </div>
+        )}
+
+        {filteredProducts.length > 0 && (
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+              <h2 class="text-2xl font-bold text-gray-800">
+                Sản phẩm ({filteredProducts.length})
+              </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProducts.map((product) => (
+                <TruckItem truck={product} client:load />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {filteredBlogPosts.length > 0 && (
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <h2 class="text-2xl font-bold text-gray-800">
+                Tin tức ({filteredBlogPosts.length})
+              </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredBlogPosts.map((post) => (
+                <article class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                  <a href={`/danh-muc-bai-viet/${post.categorySlug}/${post.slug}`} class="block">
+                    {post.image && (
+                      <div class="aspect-video overflow-hidden">
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+                    <div class="p-6">
+                      <h3 class="font-semibold text-lg line-clamp-2 hover:text-primary transition-colors mb-3">
+                        {post.title}
+                      </h3>
+                      <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                        {post.excerpt || post.description}
+                      </p>
+                      <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>{new Date(post.publishDate).toLocaleDateString('vi-VN')}</span>
+                        <span class="text-primary hover:underline">Đọc thêm →</span>
+                      </div>
+                    </div>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </main>
+
+  <Footer client:load />
+</BaseLayout>
