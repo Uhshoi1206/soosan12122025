@@ -1,0 +1,13 @@
+{
+  "id": "banner-new-arrivals",
+  "title": "Ra Mắt Dòng Xe",
+  "highlightText": "Đầu Kéo Hyundai Xcient 2024",
+  "description": "Công nghệ tiên tiến, tiết kiệm nhiên liệu vượt trội. Cam kết giá tốt nhất thị trường và dịch vụ sau bán hàng chuyên nghiệp.",
+  "backgroundImage": "https://cdn.soosanmotor.com/soosanmotor.com_mooc_ben_soosan_2_do_25.4_m3_(DUMP-25B)_1.webp",
+  "ctaPrimaryText": "Tìm hiểu thêm",
+  "ctaPrimaryLink": "/dau-keo/hyundai-xcient-dau-keo",
+  "ctaSecondaryText": "Đăng ký lái thử",
+  "ctaSecondaryLink": "/lien-he",
+  "isActive": true,
+  "order": 2
+}

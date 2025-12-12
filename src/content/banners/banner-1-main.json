@@ -1,0 +1,13 @@
+{
+  "id": "banner-main-promotion",
+  "title": "Khuyến Mãi Lớn - Giảm Giá Đến",
+  "highlightText": "20% Tất Cả Xe Tải",
+  "description": "Áp dụng cho tất cả các dòng xe tải từ 500kg đến 40 tấn. Tặng kèm bảo hiểm và phụ kiện cao cấp.",
+  "backgroundImage": "https://tongkhoxetai.vn/upload/images/banner-xe-tai.jpg",
+  "ctaPrimaryText": "Xem xe khuyến mãi",
+  "ctaPrimaryLink": "/danh-muc-xe",
+  "ctaSecondaryText": "Liên hệ ngay",
+  "ctaSecondaryLink": "/lien-he",
+  "isActive": true,
+  "order": 1
+}

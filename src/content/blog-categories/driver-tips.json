@@ -1,0 +1,10 @@
+{
+  "id": "kinh-nghiem-lai-xe",
+  "name": "Kinh Nghiệm Lái Xe",
+  "slug": "kinh-nghiem-lai-xe",
+  "description": "Chia sẻ kinh nghiệm, kỹ năng và bí quyết lái xe an toàn cho tài xế",
+  "icon": "Shield",
+  "color": "#10B981",
+  "isHidden": false,
+  "order": 3
+}

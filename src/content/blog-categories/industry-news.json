@@ -1,0 +1,10 @@
+{
+  "id": "tin-tuc-nganh-van-tai",
+  "name": "Tin Tức Ngành Vận Tải",
+  "slug": "tin-tuc-nganh-van-tai",
+  "description": "Cập nhật tin tức mới nhất về ngành vận tải, logistics và xe thương mại tại Việt Nam",
+  "icon": "Newspaper",
+  "color": "#3B82F6",
+  "isHidden": false,
+  "order": 1
+}

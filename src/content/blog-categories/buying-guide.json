@@ -1,0 +1,10 @@
+{
+  "id": "tu-van-mua-xe",
+  "name": "Tư Vấn Mua Xe",
+  "slug": "tu-van-mua-xe",
+  "description": "Tư vấn chọn mua xe thương mại phù hợp với nhu cầu kinh doanh",
+  "icon": "ShoppingCart",
+  "color": "#8B5CF6",
+  "isHidden": false,
+  "order": 5
+}

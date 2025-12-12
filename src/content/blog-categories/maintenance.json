@@ -1,0 +1,10 @@
+{
+  "id": "bao-duong",
+  "name": "Bảo Dưỡng",
+  "slug": "bao-duong",
+  "description": "Hướng dẫn bảo dưỡng, sửa chữa và chăm sóc xe tải, xe đầu kéo",
+  "icon": "Wrench",
+  "color": "#EF4444",
+  "isHidden": false,
+  "order": 4
+}

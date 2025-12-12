@@ -1,0 +1,9 @@
+{
+  "id": "xe-cau",
+  "name": "Xe Cẩu",
+  "slug": "xe-cau",
+  "description": "Xe cẩu chuyên dụng cho công trình xây dựng và vận chuyển hàng nặng",
+  "keywords": ["cẩu", "crane", "nâng", "cần cẩu", "xe cẩu", "lifting"],
+  "isHidden": false,
+  "order": 2
+}

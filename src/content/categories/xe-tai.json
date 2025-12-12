@@ -1,0 +1,9 @@
+{
+  "id": "xe-tai",
+  "name": "Xe Tải",
+  "slug": "xe-tai",
+  "description": "Các dòng xe tải từ nhẹ đến nặng phục vụ vận chuyển hàng hóa",
+  "keywords": ["xe tải", "truck", "tải trọng", "thùng", "vận chuyển", "hàng hóa"],
+  "isHidden": false,
+  "order": 1
+}

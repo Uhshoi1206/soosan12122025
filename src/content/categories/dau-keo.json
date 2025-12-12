@@ -1,0 +1,9 @@
+{
+  "id": "dau-keo",
+  "name": "Xe Đầu Kéo",
+  "slug": "dau-keo",
+  "description": "Xe đầu kéo mạnh mẽ cho vận tải container và hàng nặng",
+  "keywords": ["đầu kéo", "tractor", "kéo", "xe đầu kéo"],
+  "isHidden": false,
+  "order": 4
+}

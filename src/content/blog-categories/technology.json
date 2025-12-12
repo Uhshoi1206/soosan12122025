@@ -1,0 +1,10 @@
+{
+  "id": "cong-nghe-va-doi-moi",
+  "name": "Công Nghệ & Đổi Mới",
+  "slug": "cong-nghe-va-doi-moi",
+  "description": "Xu hướng công nghệ mới, xe điện và đổi mới trong ngành vận tải",
+  "icon": "Zap",
+  "color": "#06B6D4",
+  "isHidden": false,
+  "order": 6
+}

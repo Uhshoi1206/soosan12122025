@@ -1,0 +1,13 @@
+{
+  "id": "banner-service",
+  "title": "Chuyên Cung Cấp",
+  "highlightText": "Xe Tải, Cẩu, Mooc & Đầu Kéo Chính Hãng",
+  "description": "Đa dạng sản phẩm từ xe tải nhẹ 500kg đến đầu kéo 40 tấn, với nhiều thương hiệu uy tín. Cam kết giá tốt nhất thị trường.",
+  "backgroundImage": "https://cdn.soosanmotor.com/soosanmotor.com_mooc_ben_soosan_2_do_25.4_m3_(DUMP-25B)_4.webp",
+  "ctaPrimaryText": "Xem danh mục xe",
+  "ctaPrimaryLink": "/danh-muc-xe",
+  "ctaSecondaryText": "Liên hệ tư vấn",
+  "ctaSecondaryLink": "/lien-he",
+  "isActive": true,
+  "order": 3
+}

@@ -1,0 +1,9 @@
+{
+  "id": "mooc",
+  "name": "Sơ Mi Rơ Mooc",
+  "slug": "mooc",
+  "description": "Các loại sơ mi rơ mooc phục vụ vận tải đường dài",
+  "keywords": ["mooc", "sơ mi rơ mooc", "rơ mooc", "semi-trailer", "trailer", "container"],
+  "isHidden": false,
+  "order": 3
+}

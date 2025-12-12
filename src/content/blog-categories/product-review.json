@@ -1,0 +1,10 @@
+{
+  "id": "danh-gia-xe",
+  "name": "Đánh Giá Xe",
+  "slug": "danh-gia-xe",
+  "description": "Đánh giá chi tiết các dòng xe tải, đầu kéo, sơ mi rơ mooc và thiết bị vận tải",
+  "icon": "Star",
+  "color": "#F59E0B",
+  "isHidden": false,
+  "order": 2
+}
