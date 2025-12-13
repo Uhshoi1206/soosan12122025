@@ -149,10 +149,22 @@ const ProductDetailTabs: React.FC<ProductDetailTabsProps> = ({ truck }) => {
                       <td className="py-2 px-3 font-medium">{truck.tractorSpec.torque}</td>
                     </tr>
                   )}
+                  {truck.tractorSpec.transmission && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Hộp số</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.transmission}</td>
+                    </tr>
+                  )}
                   {truck.tractorSpec.transmissionType && (
                     <tr className="border-b">
                       <td className="py-2 px-3 text-gray-600">Loại hộp số</td>
                       <td className="py-2 px-3 font-medium">{truck.tractorSpec.transmissionType}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.axleConfiguration && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Công thức bánh xe</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.axleConfiguration}</td>
                     </tr>
                   )}
                   {truck.tractorSpec.maxTowingCapacityText && (
@@ -161,8 +173,118 @@ const ProductDetailTabs: React.FC<ProductDetailTabsProps> = ({ truck }) => {
                       <td className="py-2 px-3 font-medium">{truck.tractorSpec.maxTowingCapacityText}</td>
                     </tr>
                   )}
+                  {truck.tractorSpec.designTowingCapacity && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Tải trọng kéo thiết kế</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.designTowingCapacity}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.kerbWeight && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Khối lượng bản thân</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.kerbWeight}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.grossWeight && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Khối lượng toàn bộ</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.grossWeight}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.fifthWheelType && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Mâm kéo</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.fifthWheelType}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.fifthWheelLoad && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Tải trọng mâm kéo</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.fifthWheelLoad}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.fuelTankCapacityText && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Dung tích bình nhiên liệu</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.fuelTankCapacityText}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.cabinType && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Loại cabin</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.cabinType}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.maxSpeed && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Tốc độ tối đa</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.maxSpeed}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.climbingAbility && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Khả năng leo dốc</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.climbingAbility}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.turningRadius && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Bán kính quay vòng</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.turningRadius}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.brakingSystem && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Hệ thống phanh</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.brakingSystem}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.frontAxle && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Treo trước</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.frontAxle}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.rearAxle && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Treo sau</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.rearAxle}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.trackWidth && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Vết bánh xe</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.trackWidth}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.frameSpec && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Khung xe</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.frameSpec}</td>
+                    </tr>
+                  )}
+                  {truck.tractorSpec.electricSystem && (
+                    <tr className="border-b">
+                      <td className="py-2 px-3 text-gray-600">Hệ thống điện</td>
+                      <td className="py-2 px-3 font-medium">{truck.tractorSpec.electricSystem}</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
+
+              {/* Interior Features */}
+              {truck.tractorSpec.interiorFeatures && truck.tractorSpec.interiorFeatures.length > 0 && (
+                <>
+                  <h4 className="font-bold text-lg bg-gray-100 p-2 rounded mb-3">Tiện nghi nội thất</h4>
+                  <div className="mb-6 p-4 border rounded">
+                    <ul className="list-disc list-inside space-y-1">
+                      {truck.tractorSpec.interiorFeatures.map((feature: string, index: number) => (
+                        <li key={index} className="text-gray-700">{feature}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              )}
             </>
           )}
 
