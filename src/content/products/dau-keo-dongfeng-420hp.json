@@ -1,7 +1,7 @@
 {
     "id": "dau-keo-dongfeng-420hp",
-    "name": "Dongfeng 420HP Đầu Kéo",
-    "slug": "dongfeng-420hp-dau-keo",
+    "name": "Đầu Kéo Dongfeng 420HP",
+    "slug": "dau-keo-dongfeng-420hp",
     "brand": "Dongfeng",
     "price": null,
     "priceText": "Liên hệ",
@@ -19,53 +19,156 @@
     "images": [
         "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop"
     ],
-    "description": "Xe đầu kéo Dongfeng 420HP với động cơ Renault dCi420, mô-men xoắn 2000 Nm, nhập khẩu chính hãng từ Hoàng Huy.",
-    "detailedDescription": "<h2>Tổng Quan Xe Đầu Kéo Dongfeng 420HP</h2>\n<p><strong>Dongfeng 420HP</strong> là dòng xe đầu kéo được nhập khẩu chính hãng bởi Hoàng Huy tại Việt Nam. Trang bị động cơ Dongfeng-Renault dCi420-51 với công suất 420HP, xe đáp ứng tiêu chuẩn Euro 5 và có độ tin cậy cao.</p>\n\n<h3>Động Cơ Công Nghệ Renault</h3>\n<p>Động cơ Dongfeng Fengshen dCi420-51 dung tích 11.12L, 6 xi-lanh, công suất 420HP. Mô-men xoắn cực đại 2000 Nm tại 1100-1400 vòng/phút, đạt tiêu chuẩn Euro 5.</p>\n\n<h3>Hộp Số Fast 12 Cấp</h3>\n<p>Hộp số Fast 12JSD200TA với 12 số tiến và 2 số lùi, hoặc hộp số AMT tự động DF14S cho trải nghiệm lái thoải mái hơn.</p>\n\n<h3>Cầu Sau Hub Reduction</h3>\n<p>Cầu sau hub reduction với tải trọng 18T mỗi cầu, tỷ số truyền 3.64 hoặc 4.11, phù hợp cho cả đường phẳng và địa hình đồi núi.</p>\n\n<h3>Thương Hiệu Uy Tín</h3>\n<p>Dongfeng là thương hiệu hàng đầu tại Việt Nam trong phân khúc xe đầu kéo, với mạng lưới phân phối và dịch vụ hậu mãi rộng khắp.</p>",
+    "description": "Xe đầu kéo Dongfeng Kingland 420HP với động cơ Renault dCi Euro 5 công nghệ Pháp, hộp số Fast 12 cấp, cầu láp tiết kiệm nhiên liệu. Giải pháp tối ưu cho vận tải đường dài Bắc - Nam.",
+    "detailedDescription": "<h2>Tổng Quan Xe Đầu Kéo Dongfeng Kingland 420HP</h2>\n<p>Dòng xe đầu kéo <strong>Dongfeng Kingland 420HP</strong> nổi lên như một giải pháp cân bằng tối ưu giữa hiệu suất vận hành, chi phí đầu tư ban đầu (CAPEX) và chi phí vận hành (OPEX). Được nhập khẩu và phân phối chính thức thông qua Hoàng Huy Dongfeng, dòng xe này đánh dấu bước ngoặt công nghệ khi chuyển đổi từ nền tảng động cơ Yuchai truyền thống sang nền tảng <strong>động cơ Renault dCi thế hệ mới, đáp ứng tiêu chuẩn khí thải Euro 5</strong>.</p>\n\n<h3>Sự Chuyển Dịch Công Nghệ</h3>\n<p>Việc loại bỏ động cơ Yuchai 375HP để thay thế bằng Renault dCi 420HP không chỉ là sự gia tăng về công suất danh định mà còn là sự thay đổi về triết lý thiết kế: chuyển từ <strong>mô-men xoắn đỉnh nhọn sang dải mô-men xoắn phẳng (flat torque curve)</strong>, giúp xe duy trì lực kéo ổn định trên một dải vòng tua rộng hơn.</p>\n\n<h2>Chương 1: Động Cơ Renault dCi420-51</h2>\n<p>Đây là kết quả của liên minh chiến lược giữa Dongfeng và Volvo Group (chủ sở hữu Renault Trucks), mang lại sự thừa hưởng công nghệ luyện kim và điều khiển điện tử từ Châu Âu.</p>\n\n<h3>1.1. Thông Số Kỹ Thuật</h3>\n<ul>\n<li><strong>Loại:</strong> Diesel 4 kỳ, 6 xi-lanh thẳng hàng (I6), Turbo tăng áp, Intercooler</li>\n<li><strong>Dung tích:</strong> 11.120 cm³ (11.12 Lít)</li>\n<li><strong>Đường kính x Hành trình:</strong> 123 x 156 mm - Hành trình piston dài (undersquare engine), tối ưu mô-men xoắn vòng tua thấp</li>\n<li><strong>Công suất cực đại:</strong> 420 PS (309 kW) @ 1.800 rpm</li>\n<li><strong>Mô-men xoắn cực đại:</strong> 2.000 N.m @ 1.000 - 1.400 rpm</li>\n<li><strong>Hệ thống nhiên liệu:</strong> Phun điện tử Common Rail áp suất cao</li>\n<li><strong>Tiêu chuẩn khí thải:</strong> Euro 5 (SCR + AdBlue)</li>\n</ul>\n\n<h3>1.2. Ưu Điểm Kỹ Thuật</h3>\n<p>Động cơ đạt <strong>mô-men xoắn cực đại 2.000 Nm ngay từ vòng tua 1.000 rpm</strong>. Đối với xe đầu kéo hạng nặng, khả năng sinh công lớn ở vòng tua thấp là yếu tố sống còn giúp xe đề-pa khi đầy tải và leo dốc mà không cần về số, đồng thời giảm ma sát trượt và mài mòn các chi tiết cơ khí.</p>\n\n<h3>1.3. Hệ Thống Common Rail</h3>\n<p>ECU kiểm soát chính xác thời điểm phun, lượng phun và áp suất phun. Thực hiện <strong>đa điểm phun</strong> trong một chu kỳ nổ (pilot injection, main injection, post injection), giúp quá trình cháy êm dịu, giảm tiếng ồn và tối ưu hóa đốt cháy nhiên liệu.</p>\n\n<h3>1.4. Công Nghệ SCR Euro 5</h3>\n<p>Hệ thống phun dung dịch urê (AdBlue) vào luồng khí thải nóng, chuyển hóa NOx độc hại thành khí nitơ trơ và hơi nước vô hại. Giúp động cơ hoạt động sạch hơn, giảm muội than tích tụ, kéo dài chu kỳ bảo dưỡng.</p>\n\n<h3>1.5. Tiêu Hao Nhiên Liệu</h3>\n<ul>\n<li>Định mức không tải: ~32 lít/100km</li>\n<li>Trung bình hỗn hợp: 25.4 - 30 lít/100km (tùy tải trọng và đường)</li>\n</ul>\n\n<h2>Chương 2: Hộp Số Fast Gear 12JSD200TA-B</h2>\n\n<h3>2.1. Giải Mã Model</h3>\n<ul>\n<li><strong>12:</strong> 12 số tiến</li>\n<li><strong>J:</strong> Cơ khí (Mechanical)</li>\n<li><strong>S:</strong> Hai trục trung gian (Twin Countershaft) - chia nhỏ lực truyền, tăng khả năng chịu tải</li>\n<li><strong>D:</strong> Dòng sản phẩm (Series)</li>\n<li><strong>200:</strong> Mô-men xoắn đầu vào tối đa ~2.000 Nm</li>\n<li><strong>T:</strong> Có bộ đồng tốc (Synchronizer)</li>\n<li><strong>B:</strong> Tỷ số truyền vượt tốc (Overdrive)</li>\n</ul>\n\n<h3>2.2. Tỷ Số Truyền Chi Tiết</h3>\n<ul>\n<li><strong>Số 1:</strong> 12.098 - lực kéo khổng lồ để khởi hành ngang dốc với tải trọng 40-50 tấn</li>\n<li><strong>Số 2:</strong> 9.518 / <strong>Số 3:</strong> 7.313 / <strong>Số 4:</strong> 5.711 / <strong>Số 5:</strong> 4.462 / <strong>Số 6:</strong> 3.476</li>\n<li><strong>Số 7:</strong> 2.712 (chuyển sang tầng nhanh)</li>\n<li><strong>Số 8:</strong> 2.133 / <strong>Số 9:</strong> 1.639 / <strong>Số 10:</strong> 1.280</li>\n<li><strong>Số 11:</strong> 1.000 (Direct Drive) - hiệu suất truyền lực cao nhất</li>\n<li><strong>Số 12:</strong> 0.78 (Overdrive) - tối ưu tiết kiệm nhiên liệu cao tốc</li>\n<li><strong>Số Lùi:</strong> 11.572 / 2.594</li>\n</ul>\n\n<p><strong>Vỏ hộp số:</strong> Tùy chọn gang hoặc hợp kim nhôm (nhẹ hơn, tản nhiệt tốt hơn)</p>\n\n<h2>Chương 3: Cầu Xe và Động Lực Học</h2>\n\n<h3>3.1. Cầu Láp (Single Reduction) - Phiên Bản Phổ Biến</h3>\n<ul>\n<li><strong>Tỷ số truyền:</strong> 4.10</li>\n<li><strong>Tải trọng:</strong> 2 x 10 tấn (hoặc 13 tấn tùy phiên bản)</li>\n<li><strong>Ưu điểm:</strong> Cấu tạo đơn giản, ma sát thấp, tiết kiệm nhiên liệu 5-10% so với cầu dầu, tản nhiệt tốt khi chạy tốc độ cao liên tục</li>\n<li><strong>Ứng dụng:</strong> Đường nhựa, cao tốc, container, logistic</li>\n</ul>\n\n<h3>3.2. Tính Toán Tốc Độ Lý Thuyết</h3>\n<p>Kết hợp: Vòng tua 1.800 rpm + Số 12 (0.78) + Cầu 4.10 + Lốp 12R22.5 → <strong>Tốc độ cực đại ~111 km/h</strong>, khớp hoàn hảo với thông số công bố 110 km/h.</p>\n\n<p>Ở tốc độ hành trình 80 km/h, vòng tua máy chỉ ~1.300 rpm - nằm ngay trong dải mô-men xoắn cực đại và <strong>vùng tiết kiệm nhiên liệu nhất</strong>.</p>\n\n<h2>Chương 4: Khung Gầm và Hệ Thống Treo</h2>\n\n<h3>4.1. Kết Cấu Khung Chát-xi</h3>\n<ul>\n<li><strong>Tiết diện:</strong> 300 x 90 x (8+5) mm hoặc (8+8) mm (2 lớp)</li>\n<li><strong>Chiều cao:</strong> 300 mm - đảm bảo độ cứng uốn dọc trục</li>\n<li><strong>Chiều rộng:</strong> 90 mm - tăng cường độ cứng xoắn</li>\n<li><strong>Công nghệ:</strong> Dập nguội một lần - loại bỏ ứng suất dư, tăng độ bền mỏi</li>\n</ul>\n\n<h3>4.2. Hệ Thống Treo</h3>\n<ul>\n<li><strong>Treo trước:</strong> Nhíp lá bán nguyệt 9 lá (hoặc 7 lá) + Giảm chấn thủy lực + Thanh cân bằng (stabilizer bar)</li>\n<li><strong>Treo sau:</strong> Nhíp lá bó 10 lá (hoặc 12-13 lá), xếp dạng chữ V (V-link suspension), quang nhíp đôi và thanh giằng chữ V</li>\n</ul>\n\n<h3>4.3. Lốp Xe</h3>\n<p><strong>12R22.5 - 18PR:</strong> Bố thép (Radial), không săm (Tubeless). Lốp không săm an toàn hơn khi cán đinh - xì từ từ, không mất hơi đột ngột.</p>\n\n<h2>Chương 5: Cabin Hiện Đại</h2>\n\n<h3>5.1. Thiết Kế Khí Động Học</h3>\n<ul>\n<li>Các góc bo tròn, mui lướt gió (tùy chọn), hốc gió bên sườn</li>\n<li>Giảm hệ số cản gió (Cd), tiết kiệm nhiên liệu, giảm tiếng ồn gió</li>\n</ul>\n\n<h3>5.2. Hệ Thống Treo Cabin</h3>\n<p>Cabin đặt trên <strong>4 bầu hơi (túi khí) hoặc lò xo giảm chấn 4 điểm</strong>, tách biệt rung động từ khung gầm, êm ái như xe du lịch. Cơ cấu lật cabin bằng thủy lực, góc lật lớn cho bảo dưỡng dễ dàng.</p>\n\n<h3>5.3. Nội Thất và Tiện Nghi</h3>\n<ul>\n<li><strong>Ghế lái:</strong> Ghế hơi (Pneumatic suspension seat) đa điểm, điều chỉnh cứng mềm/cao/ngả/hỗ trợ lưng. Một số bản có quạt gió làm mát ghế</li>\n<li><strong>Giường nằm:</strong> 02 giường ngủ rộng rãi, bọc nỉ hoặc da cao cấp. Không gian dưới giường làm hộc chứa đồ lớn</li>\n<li><strong>Bảng điều khiển:</strong> Dạng vòm hướng về người lái. Vô lăng 4 chấu tích hợp nút bấm (Volume, Bluetooth, Cruise Control)</li>\n<li><strong>Giải trí:</strong> Màn hình LCD cảm ứng, Bluetooth/USB, camera lùi (tùy chọn)</li>\n<li><strong>Tiện ích:</strong> Điều hòa 2 chiều, kính chỉnh điện, khóa cửa Remote, gương sấy điện (Heated mirrors)</li>\n</ul>\n\n<h2>Chương 6: Hệ Thống Phanh và An Toàn</h2>\n\n<h3>6.1. Phanh Chính</h3>\n<ul>\n<li><strong>Loại:</strong> Phanh tang trống (Drum Brake) trên tất cả các trục</li>\n<li><strong>Dẫn động:</strong> Khí nén 2 dòng độc lập (Dual circuit) - một dòng rò rỉ, dòng còn lại vẫn hoạt động</li>\n<li><strong>ABS:</strong> Tiêu chuẩn - ngăn bánh xe bó cứng khi phanh gấp, vẫn có thể đánh lái tránh chướng ngại vật</li>\n</ul>\n\n<h3>6.2. Phanh Hỗ Trợ</h3>\n<ul>\n<li><strong>Phanh khí xả (Exhaust Brake):</strong> Van bướm trên đường ống xả hoặc Engine Brake kiểu Jacobs. Tạo lực hãm khi đổ đèo không cần rà phanh chính - ngăn quá nhiệt (fading)</li>\n<li><strong>Phanh tay:</strong> Bầu phanh tích năng (Lốc-kê) tác động cầu sau - xe đứng yên ngay cả khi mất toàn bộ khí nén</li>\n</ul>\n\n<h2>Kết Luận</h2>\n<p><strong>Xe đầu kéo Dongfeng 420HP</strong> là minh chứng cho sự trưởng thành của công nghiệp ô tô Trung Quốc khi tận dụng nền tảng công nghệ tiên tiến từ phương Tây (Renault, Dana, Fast Gear).</p>\n\n<h3>Ưu Điểm Cạnh Tranh:</h3>\n<ul>\n<li><strong>Động cơ Renault dCi:</strong> Đã được kiểm chứng toàn cầu về độ bền bỉ và tiết kiệm nhiên liệu</li>\n<li><strong>Đồng bộ hóa cao:</strong> Động cơ Renault + Hộp số Fast + Cầu Dana = hệ thống truyền động mượt mà, ít hỏng vặt</li>\n<li><strong>Chi phí hợp lý:</strong> Giá thấp hơn đáng kể so với xe Hàn Quốc/Nhật Bản, thu hồi vốn nhanh (ROI cao)</li>\n<li><strong>Phụ tùng và Dịch vụ:</strong> Mạng lưới rộng khắp, giá rẻ, giảm thiểu thời gian nằm đường (downtime)</li>\n</ul>\n\n<p><strong>Phiên bản Cầu Láp</strong> là lựa chọn \"vàng\" cho vận tải đường trường, logistic, container - nơi yêu cầu tốc độ và tiết kiệm nhiên liệu được đặt lên hàng đầu. Xứng đáng là một trong những mẫu xe đầu kéo bán chạy nhất tại Việt Nam.</p>",
     "features": [
-        "Động cơ Renault 420HP",
-        "Mô-men xoắn 2000 Nm",
-        "Tiêu chuẩn Euro 5",
-        "Nhập khẩu chính hãng",
-        "Dịch vụ hậu mãi tốt"
+        "Động cơ Renault dCi 420PS Euro 5",
+        "Mô-men xoắn 2.000 Nm từ 1.000 rpm",
+        "Hộp số Fast 12 cấp Overdrive",
+        "Cầu láp tiết kiệm nhiên liệu 5-10%",
+        "Phanh khí nén 2 dòng + ABS",
+        "Cabin treo 4 bầu hơi, 2 giường ngủ"
     ],
-    "engineModel": "dCi420-51",
-    "engineCapacity": "11.12L",
-    "enginePower": "420HP",
-    "engineTorque": "2000 Nm @ 1100-1400rpm",
-    "emissionStandard": "Euro 5",
-    "engineType": "Diesel Turbo Intercooler",
-    "fuel": "Diesel",
-    "transmission": "Fast 12JSD200TA 12 số tiến + 2 số lùi",
-    "transmissionType": "Số sàn",
-    "wheelbase": 3300,
+    "engineModel": "Renault dCi420-51",
+    "engineCapacity": "11,120cc (11.12 Lít)",
+    "enginePower": "420PS (309 kW) @ 1800rpm",
+    "engineTorque": "2000 Nm @ 1000-1400rpm",
+    "emissionStandard": "Euro 5 (SCR + AdBlue)",
+    "engineType": "Diesel 4 kỳ, 6 xi-lanh thẳng hàng, Turbo Intercooler",
+    "fuel": "Diesel (Common Rail điện tử áp suất cao)",
+    "transmission": "Fast Gear 12JSD200TA-B (12 số tiến + 2 số lùi)",
+    "transmissionType": "Số sàn đồng tốc 2 tầng, Overdrive",
+    "wheelbase": 4650,
     "wheelbaseText": "3300 + 1350 mm",
-    "tires": "12.00R22.5",
-    "cabinType": "Cabin ngủ cao cấp",
+    "tires": "12R22.5 - 18PR (Bố thép, không săm)",
+    "frontSuspension": "Nhíp lá bán nguyệt 9 lá + Giảm chấn thủy lực + Thanh cân bằng",
+    "rearSuspension": "Nhíp lá bó 10-13 lá, xếp chữ V (V-link suspension)",
+    "cabinType": "Cabin khí động học, treo 4 bầu hơi, 2 giường ngủ",
     "seats": 2,
+    "steeringSystem": "Trục vít - ê cu bi, trợ lực thủy lực",
+    "maxSpeed": "110 km/h",
+    "kerbWeight": "8800 - 9000 kg",
+    "grossWeight": "24000 kg (thiết kế) / 39000-40000 kg (kéo theo)",
     "tractorSpec": {
         "horsepower": 420,
-        "torque": "2000 Nm",
-        "transmission": "Số sàn 12 cấp Fast",
-        "transmissionType": "Manual",
-        "cabinType": "Cabin ngủ cao cấp",
-        "wheelbase": 3300,
+        "torque": "2000 Nm @ 1000-1400rpm",
+        "boreStroke": "123 x 156 mm (undersquare engine)",
+        "transmission": "Fast Gear 12JSD200TA-B (12 số tiến + 2 số lùi)",
+        "transmissionType": "Số sàn đồng tốc, Twin Countershaft, Overdrive",
+        "gearRatios": "i1=12.10, i2=9.52, i3=7.31, i4=5.71, i5=4.46, i6=3.48, i7=2.71, i8=2.13, i9=1.64, i10=1.28, i11=1.00 (Direct), i12=0.78 (OD)",
+        "transmissionHousing": "Gang hoặc hợp kim nhôm (tùy chọn)",
+        "cabinType": "Cabin khí động học, treo 4 bầu hơi, 2 giường ngủ",
+        "cabinTilt": "Lật thủy lực",
+        "wheelbase": 4650,
         "fuelTankCapacity": 600,
-        "fuelTankCapacityText": "600 lít",
+        "fuelTankCapacityText": "600 Lít (Hợp kim nhôm)",
+        "adBlueTank": "35 - 40 Lít",
         "maxTowingCapacity": 40000,
-        "maxTowingCapacityText": "40 tấn",
-        "brakingSystem": "Phanh khí nén với ABS",
+        "maxTowingCapacityText": "39.000 - 40.000 kg (theo đăng kiểm VN)",
+        "kerbWeight": "8.800 - 9.000 kg",
+        "grossWeight": "24.000 kg (thiết kế xe)",
+        "brakingSystem": "Phanh tang trống, khí nén 2 dòng độc lập",
+        "exhaustBrake": "Phanh khí xả (Exhaust Brake) hoặc Engine Brake Jacobs",
+        "parkingBrake": "Bầu phanh tích năng (Lốc-kê) tác động cầu sau",
+        "abs": true,
         "sleepingBerth": true,
-        "axleConfiguration": "6x4",
-        "frontAxle": "7T",
-        "rearAxle": "Hub Reduction 18T x 2",
-        "rearAxleRatio": "3.64 / 4.11",
+        "sleepingBerthCount": 2,
+        "axleConfiguration": "6x4 (2 cầu chủ động)",
+        "frontAxle": "Nhíp lá 9 lá + Giảm chấn + Thanh cân bằng",
+        "rearAxle": "Cầu láp (Single Reduction), tải trọng 10-13 tấn/cầu",
+        "rearAxleRatio": "4.10",
+        "trackWidth": "Trước: 2.040 mm / Sau: 1.860 mm",
+        "frameSpec": "Thép cường lực, tiết diện 300x90x(8+5)mm hoặc (8+8)mm, dập nguội",
+        "maxSpeed": "110 km/h",
+        "fuelConsumption": "Định mức: 32L/100km | Hỗn hợp: 25.4-30L/100km",
+        "cruisingRPM": "~1.300 rpm @ 80 km/h (dải mô-men xoắn tối ưu)",
         "interiorFeatures": [
-            "Điều hòa tự động",
-            "Giường ngủ",
-            "Ghế khí nén",
-            "Hệ thống giải trí"
+            "Cabin treo 4 bầu hơi/lò xo giảm chấn",
+            "Ghế hơi (Pneumatic suspension seat) đa điểm",
+            "Điều chỉnh cứng mềm/cao/ngả/hỗ trợ lưng",
+            "Quạt gió làm mát ghế (tùy phiên bản)",
+            "02 giường ngủ rộng rãi, bọc nỉ/da cao cấp",
+            "Hộc chứa đồ dưới giường",
+            "Bảng điều khiển dạng vòm hướng về người lái",
+            "Vô lăng 4 chấu tích hợp nút bấm (Volume, Bluetooth, Cruise Control)",
+            "Màn hình LCD cảm ứng, Bluetooth/USB",
+            "Camera lùi (tùy chọn)",
+            "Điều hòa 2 chiều công suất lớn",
+            "Kính chỉnh điện, khóa cửa Remote",
+            "Gương sấy điện (Heated mirrors)"
+        ],
+        "safetyFeatures": [
+            "Phanh khí nén 2 dòng độc lập (Dual circuit)",
+            "ABS - Chống bó cứng phanh tiêu chuẩn",
+            "Phanh khí xả (Exhaust Brake)",
+            "Engine Brake kiểu Jacobs (tùy phiên bản)",
+            "Bầu phanh tích năng (Lốc-kê)"
         ],
         "airConditioner": true,
-        "electricSystem": "24V"
+        "electricSystem": "24V, 2 bình 165Ah hoặc 180Ah"
+    },
+    "specifications": {
+        "thongTinChung": {
+            "nhanHieu": "DONGFENG",
+            "maKieuLoai": "DFH4250...",
+            "loaiPhuongTien": "Xe đầu kéo",
+            "congThucBanhXe": "6 x 4 (2 cầu chủ động)",
+            "xuatXu": "Trung Quốc"
+        },
+        "kichThuoc": {
+            "kichThuocTongThe": "6.960 x 2.500 x 3.770 mm",
+            "chieuDaiCoSo": "3.300 + 1.350 mm",
+            "vetBanhXe": "Trước: 2.040 mm / Sau: 1.860 mm"
+        },
+        "trongLuong": {
+            "tuTrongBanThan": "8.800 - 9.000 kg",
+            "khoiLuongKeoTheo": "39.000 - 40.000 kg",
+            "tongTaiTrong": "24.000 kg (thiết kế xe)"
+        },
+        "dongCo": {
+            "model": "Renault dCi420-51",
+            "loai": "Diesel 4 kỳ, 6 xi-lanh, Tăng áp Intercooler",
+            "dungTich": "11.120 cm³",
+            "duongKinhHanhTrinh": "123 x 156 mm",
+            "congSuat": "420 PS (309 kW) / 1.800 rpm",
+            "momenXoan": "2.000 Nm / 1.000 - 1.400 rpm",
+            "tieuChuanKhiThai": "Euro 5 (SCR + AdBlue)",
+            "hePhanNhienLieu": "Common Rail điện tử áp suất cao"
+        },
+        "truyenDong": {
+            "hopSo": "Fast Gear 12JSD200TA-B",
+            "kieuLoai": "12 tiến, 2 lùi, 2 tầng, Overdrive",
+            "tySoTruyenHopSo": "i1=12.10 ... i12=0.78 (Overdrive)",
+            "cauSau": "Cầu Láp, tải trọng 10-13 tấn, tỷ số truyền 4.10"
+        },
+        "khungGam": {
+            "khungXe": "Thép cường lực, tiết diện 300x90x(8+5)mm, dập nguội",
+            "treoTruoc": "Nhíp lá bán nguyệt 9 lá + Giảm chấn + Thanh cân bằng",
+            "treoSau": "Nhíp lá bó 10-13 lá, xếp chữ V (V-link suspension)",
+            "lopXe": "12R22.5 - 18PR (Bố thép, không săm)",
+            "thungNhienLieu": "600 Lít (Hợp kim nhôm)",
+            "binhAdBlue": "35 - 40 Lít"
+        },
+        "hePhanh": {
+            "phanhChinh": "Tang trống, khí nén 2 dòng độc lập",
+            "abs": "Có (tiêu chuẩn)",
+            "phanhKhiXa": "Có",
+            "phanhTay": "Bầu phanh tích năng (Lốc-kê)"
+        },
+        "cabin": {
+            "loai": "Cabin khí động học, treo 4 bầu hơi",
+            "gheTaiXe": "Ghế hơi (Pneumatic suspension seat)",
+            "giuongNam": "02 giường",
+            "dieuHoa": "2 chiều công suất lớn",
+            "giaiTri": "Màn hình LCD, Bluetooth/USB, Camera lùi (tùy chọn)"
+        },
+        "hieuNangVanHanh": {
+            "tocDoToiDa": "110 km/h",
+            "tieuHaoNhienLieu": "Định mức: 32L | Hỗn hợp: 25.4-30L/100km"
+        },
+        "heDien": {
+            "dienAp": "24V",
+            "acQuy": "2 bình 165Ah hoặc 180Ah"
+        }
     }
 }
