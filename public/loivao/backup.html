@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +45,7 @@
       padding: 30px;
       background: var(--bg-card);
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .header h1 {
@@ -89,13 +90,13 @@
       background: var(--bg-card);
       border-radius: 16px;
       padding: 30px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .backup-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     }
 
     .backup-card .icon {
@@ -160,7 +161,7 @@
       background: var(--bg-card);
       border-radius: 16px;
       padding: 25px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .status-section h3 {
@@ -171,7 +172,7 @@
     }
 
     #status-log {
-      background: rgba(0,0,0,0.3);
+      background: rgba(0, 0, 0, 0.3);
       border-radius: 10px;
       padding: 15px;
       max-height: 250px;
@@ -182,7 +183,7 @@
 
     .log-entry {
       padding: 5px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .log-entry:last-child {
@@ -207,7 +208,7 @@
 
     .progress-bar {
       height: 6px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 3px;
       margin-top: 15px;
       overflow: hidden;
@@ -230,14 +231,16 @@
       display: inline-block;
       width: 18px;
       height: 18px;
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       border-top-color: white;
       animation: spin 0.8s linear infinite;
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .full-backup-card {
@@ -247,6 +250,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <header class="header">
@@ -299,13 +303,23 @@
         </button>
       </div>
 
-      <!-- Full Backup -->
+      <!-- All Content Backup -->
+      <div class="backup-card">
+        <div class="icon">📂</div>
+        <h3>Backup Nội Dung CMS</h3>
+        <p>Sao lưu toàn bộ nội dung CMS: settings, sản phẩm, bài viết, banner, danh mục...</p>
+        <button class="backup-btn primary" onclick="backupContent()">
+          <span class="btn-text">Tải Backup Nội Dung</span>
+        </button>
+      </div>
+
+      <!-- Full Source Code Backup -->
       <div class="backup-card full-backup-card">
-        <div class="icon">💾</div>
-        <h3>Backup Toàn Bộ Website</h3>
-        <p>Sao lưu toàn bộ nội dung website bao gồm: cài đặt, sản phẩm, bài viết, banner, danh mục...</p>
+        <div class="icon">💻</div>
+        <h3>Backup Toàn Bộ Mã Nguồn</h3>
+        <p>Sao lưu toàn bộ source code website: src, public, scripts, config files, workflows...</p>
         <button class="backup-btn full" onclick="backupFull()">
-          <span class="btn-text">Tải Backup Toàn Bộ</span>
+          <span class="btn-text">Tải Backup Mã Nguồn</span>
         </button>
       </div>
     </div>
@@ -323,4 +337,5 @@
 
   <script src="backup.js"></script>
 </body>
+
 </html>

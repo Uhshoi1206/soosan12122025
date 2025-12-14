@@ -13,8 +13,22 @@ const CONFIG = {
         products: ['src/content/products', 'src/content/categories'],
         blog: ['src/content/blog', 'src/content/blog-categories'],
         banners: ['src/content/banners'],
-        full: ['src/content']
-    }
+        content: ['src/content'], // All CMS content
+        full: ['src', 'public', 'scripts', '.github'] // Full source code
+    },
+    // Root config files to include in full backup
+    rootFiles: [
+        'astro.config.mjs',
+        'package.json',
+        'package-lock.json',
+        'tailwind.config.ts',
+        'tsconfig.json',
+        'tsconfig.astro.json',
+        'postcss.config.js',
+        'eslint.config.js',
+        'netlify.toml',
+        'components.json'
+    ]
 };
 
 // State
@@ -333,6 +347,18 @@ async function performBackup(pathsKey, backupName, buttonElement) {
             }
         }
 
+        // For full backup, also include root config files
+        if (pathsKey === 'full' && CONFIG.rootFiles) {
+            log('Đang quét các file cấu hình gốc...', 'info');
+            for (const filename of CONFIG.rootFiles) {
+                allFiles.push({
+                    path: filename,
+                    downloadUrl: null
+                });
+            }
+            log(`✓ Thêm ${CONFIG.rootFiles.length} file cấu hình`, 'success');
+        }
+
         if (allFiles.length === 0) {
             throw new Error('Không tìm thấy file nào để backup');
         }
@@ -373,8 +399,12 @@ async function backupBanners() {
     await performBackup('banners', 'banners');
 }
 
+async function backupContent() {
+    await performBackup('content', 'cms-content');
+}
+
 async function backupFull() {
-    await performBackup('full', 'full-website');
+    await performBackup('full', 'source-code');
 }
 
 // Initialize
