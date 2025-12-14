@@ -10,8 +10,9 @@
     "astro": "astro",
     "lint": "eslint .",
     "cms:sync": "node scripts/sync-cms-categories.mjs && node scripts/generate-categories-data.mjs",
+    "cms:generate": "node scripts/generate-cms-config.js",
     "migrate:categories": "node scripts/migrate-blog-category.mjs",
-    "prebuild": "npm run migrate:categories && npm run cms:sync"
+    "prebuild": "npm run cms:generate && npm run migrate:categories && npm run cms:sync"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

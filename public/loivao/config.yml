@@ -246,6 +246,7 @@ collections:
           - { label: "Xe Cẩu", value: "xe-cau" }
           - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
           - { label: "Xe Đầu Kéo", value: "dau-keo" }
+          - { label: "Xe Lu", value: "xe-lu" }
       - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
       - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
       - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
@@ -305,6 +306,7 @@ collections:
           - { label: "Xe Cẩu", value: "xe-cau" }
           - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
           - { label: "Xe Đầu Kéo", value: "dau-keo" }
+          - { label: "Xe Lu", value: "xe-lu" }
       - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
       - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
       - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
@@ -364,6 +366,7 @@ collections:
           - { label: "Xe Cẩu", value: "xe-cau" }
           - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
           - { label: "Xe Đầu Kéo", value: "dau-keo" }
+          - { label: "Xe Lu", value: "xe-lu" }
       - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
       - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
       - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
@@ -423,6 +426,67 @@ collections:
           - { label: "Xe Cẩu", value: "xe-cau" }
           - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
           - { label: "Xe Đầu Kéo", value: "dau-keo" }
+          - { label: "Xe Lu", value: "xe-lu" }
+      - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
+      - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
+      - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
+      - { label: "Trọng Tải (tấn)", name: "weight", widget: "number", required: true }
+      - { label: "Dài (m)", name: "length", widget: "number", required: true }
+      - { label: "Rộng (m)", name: "width", widget: "number", required: true }
+      - { label: "Cao (m)", name: "height", widget: "number", required: true }
+      - { label: "Kích Thước", name: "dimensions", widget: "string", required: true }
+      - { label: "Ảnh Đại Diện", name: "thumbnailUrl", widget: "string", required: true }
+      - { label: "Ảnh Sản Phẩm", name: "images", widget: "list", required: true }
+      - { label: "Mới", name: "isNew", widget: "boolean", default: false }
+      - { label: "Nổi Bật", name: "isHot", widget: "boolean", default: false }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - label: "Tình Trạng Kho"
+        name: "stockStatus"
+        widget: "select"
+        default: "in-stock"
+        options:
+          - { label: "Sẵn hàng", value: "in-stock" }
+          - { label: "Hết hàng", value: "out-of-stock" }
+          - { label: "Đặt trước", value: "pre-order" }
+          - { label: "Ngừng kinh doanh", value: "discontinued" }
+      - { label: "Xuất Xứ", name: "origin", widget: "string", required: false }
+      - { label: "Mô Tả Ngắn", name: "description", widget: "text", required: false }
+      - { label: "Mô Tả Chi Tiết", name: "detailedDescription", widget: "markdown", required: false }
+      - { label: "Tính Năng", name: "features", widget: "list", required: false }
+      - { label: "Model Động Cơ", name: "engineModel", widget: "string", required: false }
+      - { label: "Dung Tích Động Cơ", name: "engineCapacity", widget: "string", required: false }
+      - { label: "Công Suất Động Cơ", name: "enginePower", widget: "string", required: false }
+      - { label: "Mô-men Xoắn", name: "engineTorque", widget: "string", required: false }
+      - { label: "Tiêu Chuẩn Khí Thải", name: "emissionStandard", widget: "string", required: false }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
+
+  # =========================================================
+  # SẢN PHẨM - XE LU
+  # =========================================================
+  - name: "products-xe-lu"
+    label: "🚜 Xe Lu"
+    label_singular: "Xe Lu"
+    folder: "src/content/products/xe-lu"
+    create: true
+    slug: "{{id}}"
+    extension: "json"
+    format: "json"
+    summary: "{{name}} - {{brand}}"
+    sortable_fields: ['name', 'brand', 'price', 'weight']
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tên Sản Phẩm", name: "name", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Hãng", name: "brand", widget: "string", required: true }
+      - label: "Loại Xe"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Xe Tải", value: "xe-tai" }
+          - { label: "Xe Cẩu", value: "xe-cau" }
+          - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
+          - { label: "Xe Đầu Kéo", value: "dau-keo" }
+          - { label: "Xe Lu", value: "xe-lu" }
       - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
       - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
       - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }

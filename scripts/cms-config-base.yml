@@ -1,0 +1,233 @@
+backend:
+  name: github
+  repo: Uhshoi1206/soosan12122025
+  branch: main
+  site_domain: "soosan12122025.netlify.app"
+  base_url: "https://api.netlify.com"
+
+site_url: "https://soosan12122025.netlify.app"
+display_url: "https://soosan12122025.netlify.app"
+
+media_folder: "public/assets/uploads"
+public_folder: "/assets/uploads"
+
+locale: "vi"
+
+collections:
+  # =========================================================
+  # CÀI ĐẶT TRANG WEB (Singleton)
+  # =========================================================
+  - name: "settings"
+    label: "⚙️ Cài Đặt Trang Web"
+    description: "Quản lý thông tin chung, logo, liên hệ, chi nhánh, SEO..."
+    files:
+      - name: "site-settings"
+        label: "Cài Đặt Chính"
+        file: "src/content/settings/site-settings.json"
+        fields:
+          - label: "📋 Thông Tin Chung"
+            name: "general_section"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "Tên Trang Web", name: "siteName", widget: "string", default: "Soosan Motor" }
+              - { label: "Slogan", name: "siteTagline", widget: "string", default: "Chuyên cung cấp xe tải chất lượng" }
+              - { label: "Mô Tả SEO", name: "siteDescription", widget: "text" }
+              - { label: "Từ Khóa SEO", name: "siteKeywords", widget: "list" }
+              - { label: "URL Trang Web", name: "siteUrl", widget: "string", default: "https://soosanmotor.com" }
+          - label: "🖼️ Hình Ảnh"
+            name: "images_section"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Logo", name: "logo", widget: "string", default: "https://cdn.soosanmotor.com/soosanmotor.com_logo_Soosan.webp" }
+              - { label: "Alt Text Logo", name: "logoAlt", widget: "string", default: "Soosan Motor Logo" }
+              - { label: "Favicon", name: "favicon", widget: "string", default: "/favicon.ico" }
+              - { label: "Ảnh Open Graph", name: "ogImage", widget: "string", required: false }
+          - label: "📞 Thông Tin Liên Hệ"
+            name: "contact_section"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Số Điện Thoại Chính", name: "phone", widget: "string", default: "0764678901" }
+              - { label: "Số Điện Thoại Hiển Thị", name: "phoneDisplay", widget: "string", default: "0764 6789 01" }
+              - { label: "Email", name: "email", widget: "string", default: "sales@soosanmotor.com" }
+              - { label: "Địa Chỉ Trụ Sở", name: "address", widget: "text" }
+          - label: "🏢 Hệ Thống Chi Nhánh"
+            name: "branches"
+            widget: "list"
+            collapsed: true
+            label_singular: "Vùng Miền"
+            summary: "{{fields.regionName}}"
+            fields:
+              - { label: "Tên Vùng", name: "regionName", widget: "string" }
+              - label: "Danh Sách Chi Nhánh"
+                name: "addresses"
+                widget: "list"
+                label_singular: "Chi Nhánh"
+                summary: "{{fields.province}}"
+                fields:
+                  - { label: "Tỉnh/Thành Phố", name: "province", widget: "string" }
+                  - { label: "Địa Chỉ", name: "address", widget: "string" }
+                  - { label: "Số Điện Thoại", name: "phone", widget: "string" }
+                  - { label: "Link Google Maps", name: "mapUrl", widget: "string", required: false }
+          - label: "🌐 Mạng Xã Hội"
+            name: "social_section"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Facebook URL", name: "facebookUrl", widget: "string", required: false }
+              - { label: "Facebook Username", name: "facebookUsername", widget: "string", required: false }
+              - { label: "Messenger URL", name: "messengerUrl", widget: "string", required: false }
+              - { label: "YouTube URL", name: "youtubeUrl", widget: "string", required: false }
+              - { label: "YouTube Channel Name", name: "youtubeChannelName", widget: "string", required: false }
+              - { label: "TikTok URL", name: "tiktokUrl", widget: "string", required: false }
+              - { label: "TikTok Username", name: "tiktokUsername", widget: "string", required: false }
+              - { label: "Zalo Phone", name: "zaloPhone", widget: "string", required: false }
+          - label: "🔍 SEO Nâng Cao"
+            name: "seo_section"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Google Verification", name: "googleVerification", widget: "string", required: false }
+              - { label: "Bing Verification", name: "bingVerification", widget: "string", required: false }
+              - { label: "Theme Color", name: "themeColor", widget: "color", default: "#dc2626" }
+          - label: "🎨 Bảng Màu Website"
+            name: "colors_section"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Màu Chủ Đạo (Primary)", name: "primaryColor", widget: "color", default: "#D84315" }
+              - label: "Header"
+                name: "header"
+                widget: "object"
+                collapsed: true
+                fields:
+                  - { label: "Nền Header", name: "bgColor", widget: "color", default: "#FFFFFF" }
+                  - { label: "Màu Text", name: "textColor", widget: "color", default: "#1F2937" }
+                  - { label: "Màu Hover", name: "hoverColor", widget: "color", default: "#D84315" }
+              - label: "Footer"
+                name: "footer"
+                widget: "object"
+                collapsed: true
+                fields:
+                  - { label: "Nền Footer", name: "bgColor", widget: "color", default: "#111827" }
+                  - { label: "Màu Text", name: "textColor", widget: "color", default: "#FFFFFF" }
+                  - { label: "Màu Text Phụ", name: "mutedColor", widget: "color", default: "#9CA3AF" }
+              - label: "Page Headers"
+                name: "pageHeader"
+                widget: "object"
+                collapsed: true
+                fields:
+                  - { label: "Nền", name: "bgColor", widget: "color", default: "#1F2937" }
+                  - { label: "Màu Text", name: "textColor", widget: "color", default: "#FFFFFF" }
+              - label: "Buttons"
+                name: "buttons"
+                widget: "object"
+                collapsed: true
+                fields:
+                  - { label: "Nền Button Chính", name: "primaryBg", widget: "color", default: "#D84315" }
+                  - { label: "Text Button Chính", name: "primaryText", widget: "color", default: "#FFFFFF" }
+                  - { label: "Nền Button Phụ", name: "secondaryBg", widget: "color", default: "#F3F4F6" }
+                  - { label: "Text Button Phụ", name: "secondaryText", widget: "color", default: "#1F2937" }
+              - label: "Cards & Content"
+                name: "cards"
+                widget: "object"
+                collapsed: true
+                fields:
+                  - { label: "Nền Card", name: "bgColor", widget: "color", default: "#FFFFFF" }
+                  - { label: "Viền Card", name: "borderColor", widget: "color", default: "#E5E7EB" }
+          - label: "🏛️ Thông Tin Doanh Nghiệp (Schema.org)"
+            name: "organization_section"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Tên Tổ Chức", name: "organizationName", widget: "string", default: "SOOSAN VINA MOTOR" }
+              - label: "Loại Tổ Chức"
+                name: "organizationType"
+                widget: "select"
+                default: "LocalBusiness"
+                options:
+                  - { label: "Doanh nghiệp địa phương", value: "LocalBusiness" }
+                  - { label: "Công ty", value: "Corporation" }
+                  - { label: "Tổ chức", value: "Organization" }
+              - { label: "Ngày Thành Lập", name: "foundingDate", widget: "string", required: false }
+              - { label: "Mã Số Thuế", name: "vatNumber", widget: "string", required: false }
+
+  # =========================================================
+  # DANH MỤC SẢN PHẨM
+  # =========================================================
+  - name: "categories"
+    label: "📁 Danh Mục Sản Phẩm"
+    label_singular: "Danh Mục"
+    folder: "src/content/categories"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tên Danh Mục", name: "name", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Mô Tả", name: "description", widget: "text", required: false }
+      - { label: "Từ Khóa", name: "keywords", widget: "list", required: false }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - { label: "Thứ Tự", name: "order", widget: "number", required: false }
+
+  # =========================================================
+  # DANH MỤC BÀI VIẾT
+  # =========================================================
+  - name: "blog-categories"
+    label: "📁 Danh Mục Bài Viết"
+    label_singular: "Danh Mục Bài Viết"
+    folder: "src/content/blog-categories"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tên Danh Mục", name: "name", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Mô Tả", name: "description", widget: "text", required: false }
+      - { label: "Icon", name: "icon", widget: "string", required: false }
+      - { label: "Màu Sắc", name: "color", widget: "string", required: false }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - { label: "Thứ Tự", name: "order", widget: "number", required: false }
+
+  # =========================================================
+  # BANNER TRANG CHỦ
+  # =========================================================
+  - name: "banners"
+    label: "🎨 Banner Trang Chủ"
+    label_singular: "Banner"
+    folder: "src/content/banners"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    summary: "{{title}}"
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tiêu Đề Chính", name: "title", widget: "string", required: true }
+      - { label: "Tiêu Đề Phụ (Highlight)", name: "highlightText", widget: "string", required: false }
+      - { label: "Mô Tả", name: "description", widget: "text", required: true }
+      - { label: "Ảnh Nền", name: "backgroundImage", widget: "string", required: true }
+      - { label: "Nút CTA - Text", name: "ctaPrimaryText", widget: "string", default: "Xem danh mục xe" }
+      - { label: "Nút CTA - Link", name: "ctaPrimaryLink", widget: "string", default: "/danh-muc-xe" }
+      - { label: "Nút Phụ - Text", name: "ctaSecondaryText", widget: "string", default: "Liên hệ tư vấn" }
+      - { label: "Nút Phụ - Link", name: "ctaSecondaryLink", widget: "string", default: "/lien-he" }
+      - { label: "Kích Hoạt", name: "isActive", widget: "boolean", default: true }
+      - { label: "Thứ Tự", name: "order", widget: "number", default: 0 }
+
+  # =========================================================
+  # AUTO-GENERATED PRODUCT COLLECTIONS
+  # (Generated by scripts/generate-cms-config.js)
+  # =========================================================
+{{PRODUCT_COLLECTIONS}}
+
+  # =========================================================
+  # AUTO-GENERATED BLOG COLLECTIONS
+  # (Generated by scripts/generate-cms-config.js)
+  # =========================================================
+{{BLOG_COLLECTIONS}}
