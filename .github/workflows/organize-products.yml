@@ -1,12 +1,10 @@
 name: Organize Products by Category
 
 on:
+  workflow_dispatch:  # Allow manual trigger
   push:
     branches:
       - main
-    paths:
-      - 'src/content/products/**'
-      - 'src/content/categories/**'
 
 jobs:
   organize:
