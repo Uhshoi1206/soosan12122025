@@ -78,6 +78,68 @@ function getGitHubToken() {
     const directToken = localStorage.getItem('github-token');
     if (directToken) return directToken;
 
+    // Check for manually saved token
+    const manualToken = localStorage.getItem('backup-github-token');
+    if (manualToken) return manualToken;
+
+    // Search ALL localStorage keys for anything containing token data
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+
+        if (!value) continue;
+
+        try {
+            const parsed = JSON.parse(value);
+            if (typeof parsed === 'object' && parsed !== null) {
+                // Check common token field names
+                const tokenFields = ['token', 'access_token', 'backendToken', 'github_token', 'accessToken'];
+                for (const field of tokenFields) {
+                    if (parsed[field] && typeof parsed[field] === 'string' && parsed[field].length > 20) {
+                        console.log(`Found token in localStorage["${key}"]["${field}"]`);
+                        return parsed[field];
+                    }
+                }
+                // Check nested 'user' or 'auth' objects
+                for (const subKey of ['user', 'auth', 'data']) {
+                    if (parsed[subKey] && typeof parsed[subKey] === 'object') {
+                        for (const field of tokenFields) {
+                            if (parsed[subKey][field] && typeof parsed[subKey][field] === 'string') {
+                                console.log(`Found token in localStorage["${key}"]["${subKey}"]["${field}"]`);
+                                return parsed[subKey][field];
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            // Check if raw value looks like a GitHub token
+            if (value.startsWith('ghp_') || value.startsWith('gho_') || value.startsWith('github_pat_')) {
+                return value;
+            }
+        }
+    }
+
+    return null;
+}
+
+// Prompt user to enter token manually
+function promptForToken() {
+    const token = prompt(
+        'Không tìm thấy GitHub token tự động.\n\n' +
+        'Để backup, bạn cần nhập Personal Access Token (PAT) của GitHub.\n\n' +
+        'Cách lấy token:\n' +
+        '1. Truy cập: github.com/settings/tokens\n' +
+        '2. Chọn "Generate new token (classic)"\n' +
+        '3. Đặt tên, chọn quyền "repo" (full control)\n' +
+        '4. Copy token và paste vào đây\n\n' +
+        'Nhập GitHub Token:'
+    );
+
+    if (token && token.trim()) {
+        localStorage.setItem('backup-github-token', token.trim());
+        return token.trim();
+    }
     return null;
 }
 
@@ -200,11 +262,17 @@ async function performBackup(pathsKey, backupName, buttonElement) {
         log(`Bắt đầu backup ${backupName}...`, 'info');
 
         // Get token
-        const token = getGitHubToken();
+        let token = getGitHubToken();
         if (!token) {
-            throw new Error('Không tìm thấy GitHub token. Vui lòng đăng nhập CMS trước.');
+            log('⚠ Không tìm thấy token tự động, đang yêu cầu nhập thủ công...', 'warning');
+            token = promptForToken();
+            if (!token) {
+                throw new Error('Không có GitHub token. Vui lòng nhập token để tiếp tục.');
+            }
+            log('✓ Đã nhận token thủ công', 'success');
+        } else {
+            log('✓ Đã xác thực token', 'success');
         }
-        log('✓ Đã xác thực token', 'success');
 
         // Get paths to backup
         const paths = CONFIG.paths[pathsKey];
