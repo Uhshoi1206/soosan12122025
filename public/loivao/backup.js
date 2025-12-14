@@ -427,4 +427,228 @@ document.addEventListener('DOMContentLoaded', () => {
         if (accessDenied) accessDenied.classList.add('show');
         if (mainContent) mainContent.classList.remove('show');
     }
+
+    // Setup drag and drop for restore
+    setupDragAndDrop();
 });
+
+// =========================================================
+// RESTORE FUNCTIONALITY
+// =========================================================
+
+let restoreZip = null;
+let restoreFiles = [];
+
+// Setup drag and drop handlers
+function setupDragAndDrop() {
+    const uploadArea = document.getElementById('upload-area');
+    if (!uploadArea) return;
+
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0 && files[0].name.endsWith('.zip')) {
+            processRestoreFile(files[0]);
+        } else {
+            log('⚠ Vui lòng chọn file ZIP backup', 'warning');
+        }
+    });
+}
+
+// Handle file selection
+function handleRestoreFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        processRestoreFile(file);
+    }
+}
+
+// Process restore file
+async function processRestoreFile(file) {
+    clearLog();
+    log(`Đang đọc file: ${file.name}...`, 'info');
+
+    try {
+        const zip = await JSZip.loadAsync(file);
+        restoreZip = zip;
+        restoreFiles = [];
+
+        // Get all files from ZIP
+        zip.forEach((relativePath, zipEntry) => {
+            if (!zipEntry.dir) {
+                restoreFiles.push(relativePath);
+            }
+        });
+
+        // Update preview
+        document.getElementById('restore-filename').textContent = file.name;
+        document.getElementById('restore-file-count').textContent = restoreFiles.length;
+
+        // Show file list (max 20 files)
+        const fileList = document.getElementById('restore-file-list');
+        const displayFiles = restoreFiles.slice(0, 20);
+        fileList.innerHTML = displayFiles.map(f => `<div>📄 ${f}</div>`).join('');
+        if (restoreFiles.length > 20) {
+            fileList.innerHTML += `<div>... và ${restoreFiles.length - 20} file khác</div>`;
+        }
+
+        // Show preview and enable button
+        document.getElementById('restore-preview').classList.add('show');
+        document.getElementById('restore-btn').disabled = false;
+
+        log(`✓ Đã đọc ${restoreFiles.length} files từ backup`, 'success');
+
+    } catch (error) {
+        log(`✗ Lỗi đọc file ZIP: ${error.message}`, 'error');
+    }
+}
+
+// Perform restore
+async function performRestore() {
+    if (!restoreZip || restoreFiles.length === 0) {
+        log('⚠ Chưa có file backup để khôi phục', 'warning');
+        return;
+    }
+
+    // Confirmation
+    const confirmed = confirm(
+        `⚠️ XÁC NHẬN KHÔI PHỤC\n\n` +
+        `Bạn sắp khôi phục ${restoreFiles.length} files.\n` +
+        `Các file hiện tại sẽ bị ghi đè!\n\n` +
+        `Bạn có chắc chắn muốn tiếp tục?`
+    );
+
+    if (!confirmed) {
+        log('Đã hủy khôi phục', 'info');
+        return;
+    }
+
+    const restoreBtn = document.getElementById('restore-btn');
+    restoreBtn.disabled = true;
+    restoreBtn.querySelector('.btn-text').innerHTML = '<span class="spinner"></span> Đang khôi phục...';
+
+    try {
+        clearLog();
+        log('Bắt đầu khôi phục...', 'info');
+
+        // Get token
+        let token = getGitHubToken();
+        if (!token) {
+            token = promptForToken();
+            if (!token) {
+                throw new Error('Không có GitHub token');
+            }
+        }
+        log('✓ Đã xác thực token', 'success');
+
+        showProgress(true);
+
+        let success = 0;
+        let failed = 0;
+        const total = restoreFiles.length;
+
+        for (let i = 0; i < restoreFiles.length; i++) {
+            const filePath = restoreFiles[i];
+
+            try {
+                // Get file content from ZIP
+                const content = await restoreZip.file(filePath).async('string');
+
+                // Upload to GitHub
+                await uploadFileToGitHub(filePath, content, token);
+                success++;
+
+            } catch (error) {
+                log(`⚠ Lỗi upload ${filePath}: ${error.message}`, 'warning');
+                failed++;
+            }
+
+            setProgress(((i + 1) / total) * 100);
+
+            if ((i + 1) % 5 === 0 || i === total - 1) {
+                log(`Đã xử lý ${i + 1}/${total} files...`, 'info');
+            }
+        }
+
+        showProgress(false);
+        setProgress(0);
+
+        log(`✓ Khôi phục hoàn tất! Thành công: ${success}, Lỗi: ${failed}`, 'success');
+
+        if (success > 0) {
+            log('ℹ Website sẽ tự động rebuild trên Netlify', 'info');
+        }
+
+    } catch (error) {
+        log(`✗ Lỗi: ${error.message}`, 'error');
+        showProgress(false);
+    } finally {
+        restoreBtn.disabled = false;
+        restoreBtn.querySelector('.btn-text').textContent = '🔄 Khôi Phục Dữ Liệu';
+    }
+}
+
+// Upload file to GitHub
+async function uploadFileToGitHub(path, content, token) {
+    const url = `https://api.github.com/repos/${CONFIG.repo}/contents/${path}`;
+
+    // First, try to get the file to check if it exists (need SHA for update)
+    let sha = null;
+    try {
+        const getResponse = await fetch(url + `?ref=${CONFIG.branch}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+
+        if (getResponse.ok) {
+            const data = await getResponse.json();
+            sha = data.sha;
+        }
+    } catch (e) {
+        // File doesn't exist, that's OK
+    }
+
+    // Encode content to base64
+    const base64Content = btoa(unescape(encodeURIComponent(content)));
+
+    // Create or update file
+    const body = {
+        message: `Restore: ${path}`,
+        content: base64Content,
+        branch: CONFIG.branch
+    };
+
+    if (sha) {
+        body.sha = sha;
+    }
+
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || `HTTP ${response.status}`);
+    }
+
+    return await response.json();
+}
