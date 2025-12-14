@@ -161,20 +161,64 @@ async function fetchDirectoryContents(path, token) {
     return await response.json();
 }
 
-// Fetch file content from GitHub
-async function fetchFileContent(downloadUrl, token) {
-    const response = await fetch(downloadUrl, {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/vnd.github.v3.raw'
-        }
-    });
+// Fetch file content from GitHub with retry
+async function fetchFileContent(filePath, token, retries = 3) {
+    // Use GitHub API content endpoint instead of raw download URL
+    const url = `https://api.github.com/repos/${CONFIG.repo}/contents/${filePath}?ref=${CONFIG.branch}`;
 
-    if (!response.ok) {
-        throw new Error(`Failed to fetch file: ${response.status}`);
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
+            if (response.status === 403) {
+                // Rate limited, wait and retry
+                const waitTime = attempt * 1000;
+                await new Promise(resolve => setTimeout(resolve, waitTime));
+                continue;
+            }
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            // Decode base64 content
+            if (data.content) {
+                return decodeBase64(data.content);
+            }
+
+            throw new Error('No content in response');
+        } catch (error) {
+            if (attempt === retries) {
+                throw error;
+            }
+            // Wait before retry
+            await new Promise(resolve => setTimeout(resolve, 500 * attempt));
+        }
+    }
+}
+
+// Decode base64 content (handles UTF-8)
+function decodeBase64(base64String) {
+    // Remove line breaks that GitHub adds
+    const cleanBase64 = base64String.replace(/\n/g, '');
+
+    // Decode base64 to binary
+    const binaryString = atob(cleanBase64);
+
+    // Convert binary to UTF-8 text
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
     }
 
-    return await response.text();
+    return new TextDecoder('utf-8').decode(bytes);
 }
 
 // Recursively get all files in a directory
@@ -206,7 +250,7 @@ async function createAndDownloadZip(files, token, backupName) {
 
     for (const file of files) {
         try {
-            const content = await fetchFileContent(file.downloadUrl, token);
+            const content = await fetchFileContent(file.path, token);
             zip.file(file.path, content);
             processed++;
             setProgress((processed / totalFiles) * 100);
