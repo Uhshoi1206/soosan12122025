@@ -25,6 +25,9 @@ jobs:
       - name: Run organize products script
         run: node scripts/organize-products.cjs
 
+      - name: Run cleanup orphan folders script
+        run: node scripts/cleanup-orphan-folders.cjs
+
       - name: Check for changes
         id: git-check
         run: |
