@@ -1,0 +1,11 @@
+{
+  "id": "xe-lan",
+  "name": "Xe Lăn",
+  "slug": "xe-lan",
+  "description": "Xe Lăn",
+  "keywords": [
+    "xe-lan"
+  ],
+  "isHidden": false,
+  "order": 8
+}
