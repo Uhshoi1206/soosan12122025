@@ -10,7 +10,7 @@
     "astro": "astro",
     "lint": "eslint .",
     "cms:sync": "node scripts/sync-cms-categories.mjs && node scripts/generate-categories-data.mjs",
-    "cms:generate": "node scripts/generate-cms-config.js",
+    "cms:generate": "node scripts/generate-cms-config.cjs",
     "migrate:categories": "node scripts/migrate-blog-category.mjs",
     "prebuild": "npm run cms:generate && npm run migrate:categories && npm run cms:sync"
   },
