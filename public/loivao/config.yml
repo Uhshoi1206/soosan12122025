@@ -13,86 +13,6 @@ public_folder: "/assets/uploads"
 
 locale: "vi"
 
-# =========================================================
-# PRODUCT FIELDS TEMPLATE (dùng cho tất cả product collections)
-# Khi thêm danh mục mới, copy phần "fields" này
-# =========================================================
-_product_fields: &product_fields
-  - { label: "ID", name: "id", widget: "string", required: true }
-  - { label: "Tên Sản Phẩm", name: "name", widget: "string", required: true }
-  - { label: "Slug", name: "slug", widget: "string", required: true }
-  - { label: "Hãng", name: "brand", widget: "string", required: true }
-  - label: "Loại Xe"
-    name: "type"
-    widget: "select"
-    options:
-      - { label: "Xe Tải", value: "xe-tai" }
-      - { label: "Xe Cẩu", value: "xe-cau" }
-      - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
-      - { label: "Xe Đầu Kéo", value: "dau-keo" }
-  - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
-  - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
-  - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
-  - { label: "Trọng Tải (tấn)", name: "weight", widget: "number", required: true }
-  - { label: "Dài (m)", name: "length", widget: "number", required: true }
-  - { label: "Rộng (m)", name: "width", widget: "number", required: true }
-  - { label: "Cao (m)", name: "height", widget: "number", required: true }
-  - { label: "Kích Thước", name: "dimensions", widget: "string", required: true }
-  - { label: "Ảnh Đại Diện", name: "thumbnailUrl", widget: "string", required: true }
-  - { label: "Ảnh Sản Phẩm", name: "images", widget: "list", required: true }
-  - { label: "Mới", name: "isNew", widget: "boolean", default: false }
-  - { label: "Nổi Bật", name: "isHot", widget: "boolean", default: false }
-  - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
-  - label: "Tình Trạng Kho"
-    name: "stockStatus"
-    widget: "select"
-    default: "in-stock"
-    options:
-      - { label: "Sẵn hàng", value: "in-stock" }
-      - { label: "Hết hàng", value: "out-of-stock" }
-      - { label: "Đặt trước", value: "pre-order" }
-      - { label: "Ngừng kinh doanh", value: "discontinued" }
-  - { label: "Xuất Xứ", name: "origin", widget: "string", required: false }
-  - { label: "Mô Tả Ngắn", name: "description", widget: "text", required: false }
-  - { label: "Mô Tả Chi Tiết", name: "detailedDescription", widget: "markdown", required: false }
-  - { label: "Tính Năng", name: "features", widget: "list", required: false }
-  - { label: "Model Động Cơ", name: "engineModel", widget: "string", required: false }
-  - { label: "Dung Tích Động Cơ", name: "engineCapacity", widget: "string", required: false }
-  - { label: "Công Suất Động Cơ", name: "enginePower", widget: "string", required: false }
-  - { label: "Mô-men Xoắn", name: "engineTorque", widget: "string", required: false }
-  - { label: "Tiêu Chuẩn Khí Thải", name: "emissionStandard", widget: "string", required: false }
-  - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
-
-# =========================================================
-# BLOG FIELDS TEMPLATE (dùng cho tất cả blog collections)
-# Khi thêm danh mục bài viết mới, copy phần "fields" này
-# =========================================================
-_blog_fields: &blog_fields
-  - { label: "ID", name: "id", widget: "string", required: true }
-  - { label: "Tiêu Đề", name: "title", widget: "string", required: true }
-  - { label: "Slug", name: "slug", widget: "string", required: true }
-  - { label: "Mô Tả", name: "description", widget: "text", required: true }
-  - label: "Danh Mục"
-    name: "category"
-    widget: "select"
-    options:
-      - { label: "Tin Tức Ngành Vận Tải", value: "tin-tuc-nganh-van-tai" }
-      - { label: "Đánh Giá Xe", value: "product-review" }
-      - { label: "Kinh Nghiệm Lái Xe", value: "driver-tips" }
-      - { label: "Bảo Dưỡng", value: "maintenance" }
-      - { label: "Tư Vấn Mua Xe", value: "buying-guide" }
-      - { label: "Công Nghệ & Đổi Mới", value: "technology" }
-  - { label: "Ảnh", name: "images", widget: "list", required: true }
-  - { label: "Ngày Đăng (timestamp)", name: "publishDate", widget: "number", required: true }
-  - { label: "Thời Gian Đọc (phút)", name: "readTime", widget: "number", required: true }
-  - { label: "Tác Giả", name: "author", widget: "string", required: true }
-  - { label: "Tags", name: "tags", widget: "list", required: false }
-  - { label: "Lượt Xem", name: "views", widget: "number", default: 0 }
-  - { label: "Bình Luận", name: "comments", widget: "number", default: 0 }
-  - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
-  - { label: "Nội Dung", name: "body", widget: "markdown", required: true }
-  - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
-
 collections:
   # =========================================================
   # CÀI ĐẶT TRANG WEB (Singleton)
@@ -313,7 +233,51 @@ collections:
     format: "json"
     summary: "{{name}} - {{brand}}"
     sortable_fields: ['name', 'brand', 'price', 'weight']
-    fields: *product_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tên Sản Phẩm", name: "name", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Hãng", name: "brand", widget: "string", required: true }
+      - label: "Loại Xe"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Xe Tải", value: "xe-tai" }
+          - { label: "Xe Cẩu", value: "xe-cau" }
+          - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
+          - { label: "Xe Đầu Kéo", value: "dau-keo" }
+      - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
+      - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
+      - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
+      - { label: "Trọng Tải (tấn)", name: "weight", widget: "number", required: true }
+      - { label: "Dài (m)", name: "length", widget: "number", required: true }
+      - { label: "Rộng (m)", name: "width", widget: "number", required: true }
+      - { label: "Cao (m)", name: "height", widget: "number", required: true }
+      - { label: "Kích Thước", name: "dimensions", widget: "string", required: true }
+      - { label: "Ảnh Đại Diện", name: "thumbnailUrl", widget: "string", required: true }
+      - { label: "Ảnh Sản Phẩm", name: "images", widget: "list", required: true }
+      - { label: "Mới", name: "isNew", widget: "boolean", default: false }
+      - { label: "Nổi Bật", name: "isHot", widget: "boolean", default: false }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - label: "Tình Trạng Kho"
+        name: "stockStatus"
+        widget: "select"
+        default: "in-stock"
+        options:
+          - { label: "Sẵn hàng", value: "in-stock" }
+          - { label: "Hết hàng", value: "out-of-stock" }
+          - { label: "Đặt trước", value: "pre-order" }
+          - { label: "Ngừng kinh doanh", value: "discontinued" }
+      - { label: "Xuất Xứ", name: "origin", widget: "string", required: false }
+      - { label: "Mô Tả Ngắn", name: "description", widget: "text", required: false }
+      - { label: "Mô Tả Chi Tiết", name: "detailedDescription", widget: "markdown", required: false }
+      - { label: "Tính Năng", name: "features", widget: "list", required: false }
+      - { label: "Model Động Cơ", name: "engineModel", widget: "string", required: false }
+      - { label: "Dung Tích Động Cơ", name: "engineCapacity", widget: "string", required: false }
+      - { label: "Công Suất Động Cơ", name: "enginePower", widget: "string", required: false }
+      - { label: "Mô-men Xoắn", name: "engineTorque", widget: "string", required: false }
+      - { label: "Tiêu Chuẩn Khí Thải", name: "emissionStandard", widget: "string", required: false }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # SẢN PHẨM - XE TẢI
@@ -328,7 +292,51 @@ collections:
     format: "json"
     summary: "{{name}} - {{brand}}"
     sortable_fields: ['name', 'brand', 'price', 'weight']
-    fields: *product_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tên Sản Phẩm", name: "name", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Hãng", name: "brand", widget: "string", required: true }
+      - label: "Loại Xe"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Xe Tải", value: "xe-tai" }
+          - { label: "Xe Cẩu", value: "xe-cau" }
+          - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
+          - { label: "Xe Đầu Kéo", value: "dau-keo" }
+      - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
+      - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
+      - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
+      - { label: "Trọng Tải (tấn)", name: "weight", widget: "number", required: true }
+      - { label: "Dài (m)", name: "length", widget: "number", required: true }
+      - { label: "Rộng (m)", name: "width", widget: "number", required: true }
+      - { label: "Cao (m)", name: "height", widget: "number", required: true }
+      - { label: "Kích Thước", name: "dimensions", widget: "string", required: true }
+      - { label: "Ảnh Đại Diện", name: "thumbnailUrl", widget: "string", required: true }
+      - { label: "Ảnh Sản Phẩm", name: "images", widget: "list", required: true }
+      - { label: "Mới", name: "isNew", widget: "boolean", default: false }
+      - { label: "Nổi Bật", name: "isHot", widget: "boolean", default: false }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - label: "Tình Trạng Kho"
+        name: "stockStatus"
+        widget: "select"
+        default: "in-stock"
+        options:
+          - { label: "Sẵn hàng", value: "in-stock" }
+          - { label: "Hết hàng", value: "out-of-stock" }
+          - { label: "Đặt trước", value: "pre-order" }
+          - { label: "Ngừng kinh doanh", value: "discontinued" }
+      - { label: "Xuất Xứ", name: "origin", widget: "string", required: false }
+      - { label: "Mô Tả Ngắn", name: "description", widget: "text", required: false }
+      - { label: "Mô Tả Chi Tiết", name: "detailedDescription", widget: "markdown", required: false }
+      - { label: "Tính Năng", name: "features", widget: "list", required: false }
+      - { label: "Model Động Cơ", name: "engineModel", widget: "string", required: false }
+      - { label: "Dung Tích Động Cơ", name: "engineCapacity", widget: "string", required: false }
+      - { label: "Công Suất Động Cơ", name: "enginePower", widget: "string", required: false }
+      - { label: "Mô-men Xoắn", name: "engineTorque", widget: "string", required: false }
+      - { label: "Tiêu Chuẩn Khí Thải", name: "emissionStandard", widget: "string", required: false }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # SẢN PHẨM - SƠ MI RƠ MOOC
@@ -343,7 +351,51 @@ collections:
     format: "json"
     summary: "{{name}} - {{brand}}"
     sortable_fields: ['name', 'brand', 'price', 'weight']
-    fields: *product_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tên Sản Phẩm", name: "name", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Hãng", name: "brand", widget: "string", required: true }
+      - label: "Loại Xe"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Xe Tải", value: "xe-tai" }
+          - { label: "Xe Cẩu", value: "xe-cau" }
+          - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
+          - { label: "Xe Đầu Kéo", value: "dau-keo" }
+      - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
+      - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
+      - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
+      - { label: "Trọng Tải (tấn)", name: "weight", widget: "number", required: true }
+      - { label: "Dài (m)", name: "length", widget: "number", required: true }
+      - { label: "Rộng (m)", name: "width", widget: "number", required: true }
+      - { label: "Cao (m)", name: "height", widget: "number", required: true }
+      - { label: "Kích Thước", name: "dimensions", widget: "string", required: true }
+      - { label: "Ảnh Đại Diện", name: "thumbnailUrl", widget: "string", required: true }
+      - { label: "Ảnh Sản Phẩm", name: "images", widget: "list", required: true }
+      - { label: "Mới", name: "isNew", widget: "boolean", default: false }
+      - { label: "Nổi Bật", name: "isHot", widget: "boolean", default: false }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - label: "Tình Trạng Kho"
+        name: "stockStatus"
+        widget: "select"
+        default: "in-stock"
+        options:
+          - { label: "Sẵn hàng", value: "in-stock" }
+          - { label: "Hết hàng", value: "out-of-stock" }
+          - { label: "Đặt trước", value: "pre-order" }
+          - { label: "Ngừng kinh doanh", value: "discontinued" }
+      - { label: "Xuất Xứ", name: "origin", widget: "string", required: false }
+      - { label: "Mô Tả Ngắn", name: "description", widget: "text", required: false }
+      - { label: "Mô Tả Chi Tiết", name: "detailedDescription", widget: "markdown", required: false }
+      - { label: "Tính Năng", name: "features", widget: "list", required: false }
+      - { label: "Model Động Cơ", name: "engineModel", widget: "string", required: false }
+      - { label: "Dung Tích Động Cơ", name: "engineCapacity", widget: "string", required: false }
+      - { label: "Công Suất Động Cơ", name: "enginePower", widget: "string", required: false }
+      - { label: "Mô-men Xoắn", name: "engineTorque", widget: "string", required: false }
+      - { label: "Tiêu Chuẩn Khí Thải", name: "emissionStandard", widget: "string", required: false }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # SẢN PHẨM - XE CẨU
@@ -358,7 +410,51 @@ collections:
     format: "json"
     summary: "{{name}} - {{brand}}"
     sortable_fields: ['name', 'brand', 'price', 'weight']
-    fields: *product_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tên Sản Phẩm", name: "name", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Hãng", name: "brand", widget: "string", required: true }
+      - label: "Loại Xe"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Xe Tải", value: "xe-tai" }
+          - { label: "Xe Cẩu", value: "xe-cau" }
+          - { label: "Sơ Mi Rơ Mooc", value: "mooc" }
+          - { label: "Xe Đầu Kéo", value: "dau-keo" }
+      - { label: "Giá (VNĐ)", name: "price", widget: "number", required: false }
+      - { label: "Giá Hiển Thị", name: "priceText", widget: "string", required: false }
+      - { label: "Trọng Tải Hiển Thị", name: "weightText", widget: "string", required: true }
+      - { label: "Trọng Tải (tấn)", name: "weight", widget: "number", required: true }
+      - { label: "Dài (m)", name: "length", widget: "number", required: true }
+      - { label: "Rộng (m)", name: "width", widget: "number", required: true }
+      - { label: "Cao (m)", name: "height", widget: "number", required: true }
+      - { label: "Kích Thước", name: "dimensions", widget: "string", required: true }
+      - { label: "Ảnh Đại Diện", name: "thumbnailUrl", widget: "string", required: true }
+      - { label: "Ảnh Sản Phẩm", name: "images", widget: "list", required: true }
+      - { label: "Mới", name: "isNew", widget: "boolean", default: false }
+      - { label: "Nổi Bật", name: "isHot", widget: "boolean", default: false }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - label: "Tình Trạng Kho"
+        name: "stockStatus"
+        widget: "select"
+        default: "in-stock"
+        options:
+          - { label: "Sẵn hàng", value: "in-stock" }
+          - { label: "Hết hàng", value: "out-of-stock" }
+          - { label: "Đặt trước", value: "pre-order" }
+          - { label: "Ngừng kinh doanh", value: "discontinued" }
+      - { label: "Xuất Xứ", name: "origin", widget: "string", required: false }
+      - { label: "Mô Tả Ngắn", name: "description", widget: "text", required: false }
+      - { label: "Mô Tả Chi Tiết", name: "detailedDescription", widget: "markdown", required: false }
+      - { label: "Tính Năng", name: "features", widget: "list", required: false }
+      - { label: "Model Động Cơ", name: "engineModel", widget: "string", required: false }
+      - { label: "Dung Tích Động Cơ", name: "engineCapacity", widget: "string", required: false }
+      - { label: "Công Suất Động Cơ", name: "enginePower", widget: "string", required: false }
+      - { label: "Mô-men Xoắn", name: "engineTorque", widget: "string", required: false }
+      - { label: "Tiêu Chuẩn Khí Thải", name: "emissionStandard", widget: "string", required: false }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # BÀI VIẾT - TIN TỨC NGÀNH VẬN TẢI
@@ -373,7 +469,31 @@ collections:
     format: "frontmatter"
     summary: "{{title}}"
     sortable_fields: ['title', 'publishDate']
-    fields: *blog_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tiêu Đề", name: "title", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Mô Tả", name: "description", widget: "text", required: true }
+      - label: "Danh Mục"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Tin Tức Ngành Vận Tải", value: "tin-tuc-nganh-van-tai" }
+          - { label: "Đánh Giá Xe", value: "danh-gia-xe" }
+          - { label: "Kinh Nghiệm Lái Xe", value: "kinh-nghiem-lai-xe" }
+          - { label: "Bảo Dưỡng", value: "bao-duong" }
+          - { label: "Tư Vấn Mua Xe", value: "tu-van-mua-xe" }
+          - { label: "Công Nghệ & Đổi Mới", value: "cong-nghe-va-doi-moi" }
+      - { label: "Ảnh", name: "images", widget: "list", required: true }
+      - { label: "Ngày Đăng (timestamp)", name: "publishDate", widget: "number", required: true }
+      - { label: "Thời Gian Đọc (phút)", name: "readTime", widget: "number", required: true }
+      - { label: "Tác Giả", name: "author", widget: "string", required: true }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Lượt Xem", name: "views", widget: "number", default: 0 }
+      - { label: "Bình Luận", name: "comments", widget: "number", default: 0 }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - { label: "Nội Dung", name: "body", widget: "markdown", required: true }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # BÀI VIẾT - ĐÁNH GIÁ XE
@@ -388,7 +508,31 @@ collections:
     format: "frontmatter"
     summary: "{{title}}"
     sortable_fields: ['title', 'publishDate']
-    fields: *blog_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tiêu Đề", name: "title", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Mô Tả", name: "description", widget: "text", required: true }
+      - label: "Danh Mục"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Tin Tức Ngành Vận Tải", value: "tin-tuc-nganh-van-tai" }
+          - { label: "Đánh Giá Xe", value: "danh-gia-xe" }
+          - { label: "Kinh Nghiệm Lái Xe", value: "kinh-nghiem-lai-xe" }
+          - { label: "Bảo Dưỡng", value: "bao-duong" }
+          - { label: "Tư Vấn Mua Xe", value: "tu-van-mua-xe" }
+          - { label: "Công Nghệ & Đổi Mới", value: "cong-nghe-va-doi-moi" }
+      - { label: "Ảnh", name: "images", widget: "list", required: true }
+      - { label: "Ngày Đăng (timestamp)", name: "publishDate", widget: "number", required: true }
+      - { label: "Thời Gian Đọc (phút)", name: "readTime", widget: "number", required: true }
+      - { label: "Tác Giả", name: "author", widget: "string", required: true }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Lượt Xem", name: "views", widget: "number", default: 0 }
+      - { label: "Bình Luận", name: "comments", widget: "number", default: 0 }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - { label: "Nội Dung", name: "body", widget: "markdown", required: true }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # BÀI VIẾT - KINH NGHIỆM LÁI XE
@@ -403,7 +547,31 @@ collections:
     format: "frontmatter"
     summary: "{{title}}"
     sortable_fields: ['title', 'publishDate']
-    fields: *blog_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tiêu Đề", name: "title", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Mô Tả", name: "description", widget: "text", required: true }
+      - label: "Danh Mục"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Tin Tức Ngành Vận Tải", value: "tin-tuc-nganh-van-tai" }
+          - { label: "Đánh Giá Xe", value: "danh-gia-xe" }
+          - { label: "Kinh Nghiệm Lái Xe", value: "kinh-nghiem-lai-xe" }
+          - { label: "Bảo Dưỡng", value: "bao-duong" }
+          - { label: "Tư Vấn Mua Xe", value: "tu-van-mua-xe" }
+          - { label: "Công Nghệ & Đổi Mới", value: "cong-nghe-va-doi-moi" }
+      - { label: "Ảnh", name: "images", widget: "list", required: true }
+      - { label: "Ngày Đăng (timestamp)", name: "publishDate", widget: "number", required: true }
+      - { label: "Thời Gian Đọc (phút)", name: "readTime", widget: "number", required: true }
+      - { label: "Tác Giả", name: "author", widget: "string", required: true }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Lượt Xem", name: "views", widget: "number", default: 0 }
+      - { label: "Bình Luận", name: "comments", widget: "number", default: 0 }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - { label: "Nội Dung", name: "body", widget: "markdown", required: true }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # BÀI VIẾT - BẢO DƯỠNG
@@ -418,7 +586,31 @@ collections:
     format: "frontmatter"
     summary: "{{title}}"
     sortable_fields: ['title', 'publishDate']
-    fields: *blog_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tiêu Đề", name: "title", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Mô Tả", name: "description", widget: "text", required: true }
+      - label: "Danh Mục"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Tin Tức Ngành Vận Tải", value: "tin-tuc-nganh-van-tai" }
+          - { label: "Đánh Giá Xe", value: "danh-gia-xe" }
+          - { label: "Kinh Nghiệm Lái Xe", value: "kinh-nghiem-lai-xe" }
+          - { label: "Bảo Dưỡng", value: "bao-duong" }
+          - { label: "Tư Vấn Mua Xe", value: "tu-van-mua-xe" }
+          - { label: "Công Nghệ & Đổi Mới", value: "cong-nghe-va-doi-moi" }
+      - { label: "Ảnh", name: "images", widget: "list", required: true }
+      - { label: "Ngày Đăng (timestamp)", name: "publishDate", widget: "number", required: true }
+      - { label: "Thời Gian Đọc (phút)", name: "readTime", widget: "number", required: true }
+      - { label: "Tác Giả", name: "author", widget: "string", required: true }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Lượt Xem", name: "views", widget: "number", default: 0 }
+      - { label: "Bình Luận", name: "comments", widget: "number", default: 0 }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - { label: "Nội Dung", name: "body", widget: "markdown", required: true }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # BÀI VIẾT - TƯ VẤN MUA XE
@@ -433,7 +625,31 @@ collections:
     format: "frontmatter"
     summary: "{{title}}"
     sortable_fields: ['title', 'publishDate']
-    fields: *blog_fields
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tiêu Đề", name: "title", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Mô Tả", name: "description", widget: "text", required: true }
+      - label: "Danh Mục"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Tin Tức Ngành Vận Tải", value: "tin-tuc-nganh-van-tai" }
+          - { label: "Đánh Giá Xe", value: "danh-gia-xe" }
+          - { label: "Kinh Nghiệm Lái Xe", value: "kinh-nghiem-lai-xe" }
+          - { label: "Bảo Dưỡng", value: "bao-duong" }
+          - { label: "Tư Vấn Mua Xe", value: "tu-van-mua-xe" }
+          - { label: "Công Nghệ & Đổi Mới", value: "cong-nghe-va-doi-moi" }
+      - { label: "Ảnh", name: "images", widget: "list", required: true }
+      - { label: "Ngày Đăng (timestamp)", name: "publishDate", widget: "number", required: true }
+      - { label: "Thời Gian Đọc (phút)", name: "readTime", widget: "number", required: true }
+      - { label: "Tác Giả", name: "author", widget: "string", required: true }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Lượt Xem", name: "views", widget: "number", default: 0 }
+      - { label: "Bình Luận", name: "comments", widget: "number", default: 0 }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - { label: "Nội Dung", name: "body", widget: "markdown", required: true }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
 
   # =========================================================
   # BÀI VIẾT - CÔNG NGHỆ & ĐỔI MỚI
@@ -448,15 +664,28 @@ collections:
     format: "frontmatter"
     summary: "{{title}}"
     sortable_fields: ['title', 'publishDate']
-    fields: *blog_fields
-
-# =========================================================
-# HƯỚNG DẪN THÊM DANH MỤC MỚI
-# =========================================================
-# 1. Thêm folder mới: src/content/products/[ten-danh-muc]/
-# 2. Copy một collection bên trên và thay đổi:
-#    - name: "products-[ten-danh-muc]"
-#    - label: "[Emoji] [Tên Danh Mục]"
-#    - folder: "src/content/products/[ten-danh-muc]"
-# 3. Thêm category vào src/content/categories/[ten-danh-muc].json
-# 4. Thêm option mới vào _product_fields > type > options
+    fields:
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Tiêu Đề", name: "title", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: true }
+      - { label: "Mô Tả", name: "description", widget: "text", required: true }
+      - label: "Danh Mục"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Tin Tức Ngành Vận Tải", value: "tin-tuc-nganh-van-tai" }
+          - { label: "Đánh Giá Xe", value: "danh-gia-xe" }
+          - { label: "Kinh Nghiệm Lái Xe", value: "kinh-nghiem-lai-xe" }
+          - { label: "Bảo Dưỡng", value: "bao-duong" }
+          - { label: "Tư Vấn Mua Xe", value: "tu-van-mua-xe" }
+          - { label: "Công Nghệ & Đổi Mới", value: "cong-nghe-va-doi-moi" }
+      - { label: "Ảnh", name: "images", widget: "list", required: true }
+      - { label: "Ngày Đăng (timestamp)", name: "publishDate", widget: "number", required: true }
+      - { label: "Thời Gian Đọc (phút)", name: "readTime", widget: "number", required: true }
+      - { label: "Tác Giả", name: "author", widget: "string", required: true }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Lượt Xem", name: "views", widget: "number", default: 0 }
+      - { label: "Bình Luận", name: "comments", widget: "number", default: 0 }
+      - { label: "Ẩn", name: "isHidden", widget: "boolean", default: false }
+      - { label: "Nội Dung", name: "body", widget: "markdown", required: true }
+      - { label: "Thứ Tự Sắp Xếp", name: "order", widget: "number", required: false }
