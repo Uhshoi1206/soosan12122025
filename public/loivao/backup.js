@@ -409,13 +409,22 @@ async function backupFull() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    log('Sẵn sàng thực hiện backup. Chọn loại backup bên trên.', 'info');
+    const accessDenied = document.getElementById('access-denied');
+    const mainContent = document.getElementById('main-content');
 
-    // Check token availability
+    // Check token availability for access control
     const token = getGitHubToken();
+
     if (token) {
+        // User has token - show main content
+        if (mainContent) mainContent.classList.add('show');
+        if (accessDenied) accessDenied.classList.remove('show');
+
+        log('Sẵn sàng thực hiện backup. Chọn loại backup bên trên.', 'info');
         log('✓ Đã tìm thấy GitHub token', 'success');
     } else {
-        log('⚠ Chưa có GitHub token. Hãy đăng nhập CMS trước khi backup.', 'warning');
+        // No token - show access denied
+        if (accessDenied) accessDenied.classList.add('show');
+        if (mainContent) mainContent.classList.remove('show');
     }
 });

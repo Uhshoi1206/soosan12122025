@@ -248,94 +248,157 @@
       background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
       border: 1px solid rgba(124, 58, 237, 0.3);
     }
+
+    /* Access denied screen */
+    .access-denied {
+      display: none;
+      text-align: center;
+      padding: 60px 30px;
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 100, 100, 0.3);
+    }
+
+    .access-denied.show {
+      display: block;
+    }
+
+    .access-denied .icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .access-denied h2 {
+      color: var(--error);
+      margin-bottom: 15px;
+    }
+
+    .access-denied p {
+      color: var(--text-muted);
+      margin-bottom: 25px;
+    }
+
+    .access-denied .login-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), #ff6b35);
+      color: white;
+      padding: 14px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .access-denied .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(216, 67, 21, 0.4);
+    }
+
+    .main-content {
+      display: none;
+    }
+
+    .main-content.show {
+      display: block;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <header class="header">
-      <h1>💾 Backup Website</h1>
-      <p>Sao lưu nội dung website Soosan Motor</p>
-      <nav class="nav-links">
-        <a href="/loivao/">← Quay lại CMS</a>
-        <a href="/" target="_blank">Xem Website →</a>
-      </nav>
-    </header>
-
-    <div class="backup-grid">
-      <!-- Settings Backup -->
-      <div class="backup-card">
-        <div class="icon">⚙️</div>
-        <h3>Backup Settings</h3>
-        <p>Sao lưu cài đặt trang web, thông tin liên hệ, chi nhánh, SEO...</p>
-        <button class="backup-btn primary" onclick="backupSettings()">
-          <span class="btn-text">Tải Backup Settings</span>
-        </button>
-      </div>
-
-      <!-- Products Backup -->
-      <div class="backup-card">
-        <div class="icon">📦</div>
-        <h3>Backup Sản Phẩm</h3>
-        <p>Sao lưu tất cả sản phẩm, danh mục và thông tin xe...</p>
-        <button class="backup-btn primary" onclick="backupProducts()">
-          <span class="btn-text">Tải Backup Sản Phẩm</span>
-        </button>
-      </div>
-
-      <!-- Blog Backup -->
-      <div class="backup-card">
-        <div class="icon">📝</div>
-        <h3>Backup Bài Viết</h3>
-        <p>Sao lưu tất cả bài viết blog, danh mục bài viết...</p>
-        <button class="backup-btn primary" onclick="backupBlog()">
-          <span class="btn-text">Tải Backup Bài Viết</span>
-        </button>
-      </div>
-
-      <!-- Banners Backup -->
-      <div class="backup-card">
-        <div class="icon">🎨</div>
-        <h3>Backup Banners</h3>
-        <p>Sao lưu tất cả banner trang chủ...</p>
-        <button class="backup-btn primary" onclick="backupBanners()">
-          <span class="btn-text">Tải Backup Banners</span>
-        </button>
-      </div>
-
-      <!-- All Content Backup -->
-      <div class="backup-card">
-        <div class="icon">📂</div>
-        <h3>Backup Nội Dung CMS</h3>
-        <p>Sao lưu toàn bộ nội dung CMS: settings, sản phẩm, bài viết, banner, danh mục...</p>
-        <button class="backup-btn primary" onclick="backupContent()">
-          <span class="btn-text">Tải Backup Nội Dung</span>
-        </button>
-      </div>
-
-      <!-- Full Source Code Backup -->
-      <div class="backup-card full-backup-card">
-        <div class="icon">💻</div>
-        <h3>Backup Toàn Bộ Mã Nguồn</h3>
-        <p>Sao lưu toàn bộ source code website: src, public, scripts, config files, workflows...</p>
-        <button class="backup-btn full" onclick="backupFull()">
-          <span class="btn-text">Tải Backup Mã Nguồn</span>
-        </button>
-      </div>
+    <!-- Access Denied Screen -->
+    <div class="access-denied" id="access-denied">
+      <div class="icon">🔒</div>
+      <h2>Truy Cập Bị Từ Chối</h2>
+      <p>Bạn cần đăng nhập vào CMS trước khi sử dụng chức năng backup.<br>Vui lòng đăng nhập và quay lại trang này.</p>
+      <a href="/loivao/" class="login-btn">Đăng Nhập CMS →</a>
     </div>
 
-    <section class="status-section">
-      <h3>📋 Trạng Thái Backup</h3>
-      <div id="status-log">
-        <div class="log-entry info">Sẵn sàng thực hiện backup...</div>
-      </div>
-      <div class="progress-bar" id="progress-bar">
-        <div class="progress-bar-fill" id="progress-fill"></div>
-      </div>
-    </section>
-  </div>
+    <!-- Main Content (hidden by default) -->
+    <div class="main-content" id="main-content">
+      <header class="header">
+        <h1>💾 Backup Website</h1>
+        <p>Sao lưu nội dung website Soosan Motor</p>
+        <nav class="nav-links">
+          <a href="/loivao/">← Quay lại CMS</a>
+          <a href="/" target="_blank">Xem Website →</a>
+        </nav>
+      </header>
 
-  <script src="backup.js"></script>
+      <div class="backup-grid">
+        <!-- Settings Backup -->
+        <div class="backup-card">
+          <div class="icon">⚙️</div>
+          <h3>Backup Settings</h3>
+          <p>Sao lưu cài đặt trang web, thông tin liên hệ, chi nhánh, SEO...</p>
+          <button class="backup-btn primary" onclick="backupSettings()">
+            <span class="btn-text">Tải Backup Settings</span>
+          </button>
+        </div>
+
+        <!-- Products Backup -->
+        <div class="backup-card">
+          <div class="icon">📦</div>
+          <h3>Backup Sản Phẩm</h3>
+          <p>Sao lưu tất cả sản phẩm, danh mục và thông tin xe...</p>
+          <button class="backup-btn primary" onclick="backupProducts()">
+            <span class="btn-text">Tải Backup Sản Phẩm</span>
+          </button>
+        </div>
+
+        <!-- Blog Backup -->
+        <div class="backup-card">
+          <div class="icon">📝</div>
+          <h3>Backup Bài Viết</h3>
+          <p>Sao lưu tất cả bài viết blog, danh mục bài viết...</p>
+          <button class="backup-btn primary" onclick="backupBlog()">
+            <span class="btn-text">Tải Backup Bài Viết</span>
+          </button>
+        </div>
+
+        <!-- Banners Backup -->
+        <div class="backup-card">
+          <div class="icon">🎨</div>
+          <h3>Backup Banners</h3>
+          <p>Sao lưu tất cả banner trang chủ...</p>
+          <button class="backup-btn primary" onclick="backupBanners()">
+            <span class="btn-text">Tải Backup Banners</span>
+          </button>
+        </div>
+
+        <!-- All Content Backup -->
+        <div class="backup-card">
+          <div class="icon">📂</div>
+          <h3>Backup Nội Dung CMS</h3>
+          <p>Sao lưu toàn bộ nội dung CMS: settings, sản phẩm, bài viết, banner, danh mục...</p>
+          <button class="backup-btn primary" onclick="backupContent()">
+            <span class="btn-text">Tải Backup Nội Dung</span>
+          </button>
+        </div>
+
+        <!-- Full Source Code Backup -->
+        <div class="backup-card full-backup-card">
+          <div class="icon">💻</div>
+          <h3>Backup Toàn Bộ Mã Nguồn</h3>
+          <p>Sao lưu toàn bộ source code website: src, public, scripts, config files, workflows...</p>
+          <button class="backup-btn full" onclick="backupFull()">
+            <span class="btn-text">Tải Backup Mã Nguồn</span>
+          </button>
+        </div>
+      </div>
+
+      <section class="status-section">
+        <h3>📋 Trạng Thái Backup</h3>
+        <div id="status-log">
+          <div class="log-entry info">Sẵn sàng thực hiện backup...</div>
+        </div>
+        <div class="progress-bar" id="progress-bar">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </section>
+    </div>
+
+    <script src="backup.js"></script>
 </body>
 
 </html>
